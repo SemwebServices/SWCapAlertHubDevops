@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+#
+# Ubuntu - get the latest vagrant EG wget -c https://releases.hashicorp.com/vagrant/2.1.1/vagrant_2.1.1_x86_64.deb
+#        - the one from the ubuntu repos will cause a dependency conflict when installing the vagrant-docker-compose plugin
+#
+# Use vagrant plugin - install vagrant-docker-compose
+#        - vagrant plugin install vagrant-docker-compose
+#
+#
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://atlas.hashicorp.com/search.
+  config.vm.box = "ubuntu/cosmic64"
+
+  config.vm.network "forwarded_port", guest: 3306, host: 3306
+  config.vm.provision :docker
+  config.vm.provision :docker_compose, rebuild: true, run: "always", yml: "/vagrant/docker-compose.yml"
+
+end
