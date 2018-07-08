@@ -59,6 +59,7 @@ services:
       default:
         aliases:
           - eshost
+          - elasticsearch
 
   # Converted from 
   # docker run -d --restart always --hostname rabbitmq -p 15672:15672 -p 5672:5672 --name rabbitmq -e RABBITMQ_DEFAULT_USER=adm -e RABBITMQ_DEFAULT_PASS=admpass rabbitmq:management
@@ -75,6 +76,10 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=adm
       - RABBITMQ_DEFAULT_PASS=admpass 
+    networks:
+      default:
+        aliases:
+          - rabbitmq
 
   tomcat:
     build: tomcat
