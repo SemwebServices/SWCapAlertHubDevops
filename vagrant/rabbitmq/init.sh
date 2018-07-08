@@ -1,19 +1,22 @@
 #!/bin/sh
 
 # Create Default RabbitMQ setup
-( sleep 10 ; \
-
 # Create users
 # rabbitmqctl add_user <username> <password>
-rabbitmqctl add_user test_user test_user ; \
-
-rabbitmqctl add_user cap cap \
-rabbitmq-plugins enable rabbitmq_web_stomp; \
-
+# rabbitmqctl add_user test_user test_user ; \
 # Set user rights
 # rabbitmqctl set_user_tags <username> <tag>
-rabbitmqctl set_user_tags test_user administrator ; \
-
+# rabbitmqctl set_user_tags test_user administrator ; \
+# Create vhosts
+# rabbitmqctl add_vhost <vhostname>
+# rabbitmqctl add_vhost dummy ; \
+# Set vhost permissions
+# rabbitmqctl set_permissions -p <vhostname> <username> ".*" ".*" ".*"
+# rabbitmqctl set_permissions -p dummy test_user ".*" ".*" ".*" ; \
+( sleep 10 ; \
+rabbitmqctl add_user cap cap; \
+rabbitmq-plugins enable rabbitmq_web_stomp; \
+rabbitmqctl set_user_tags cap administrator ; \
 rabbitmqadmin declare exchange name=FeedFetcher type=topic ; \
 rabbitmqadmin declare exchange name=CAPExchange type=topic ; \
 rabbitmqadmin declare queue name=CAPCollatorATOMQueue durable=true ; \
@@ -24,15 +27,7 @@ rabbitmqctl set_permissions cap "stomp-subscription-.*" "stomp-subscription-.*" 
 rabbitmqctl list_exchanges ; \
 rabbitmqctl list_queues ; \
 rabbitmqctl list_bindings ; \
-
-# Create vhosts
-# rabbitmqctl add_vhost <vhostname>
-# rabbitmqctl add_vhost dummy ; \
-
-# Set vhost permissions
-# rabbitmqctl set_permissions -p <vhostname> <username> ".*" ".*" ".*"
-# rabbitmqctl set_permissions -p dummy test_user ".*" ".*" ".*" ; \
-
+rabbitmqctl set_permissions cap ".*" ".*" ".*" ; \
 ) &    
 rabbitmq-server $@
 
