@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Create Default RabbitMQ setup
+( sleep 10 ; \
+
+# Create users
+# rabbitmqctl add_user <username> <password>
+rabbitmqctl add_user test_user test_user ; \
+
+rabbitmqctl add_user cap cap \
+rabbitmq-plugins enable rabbitmq_web_stomp; \
+
+# Set user rights
+# rabbitmqctl set_user_tags <username> <tag>
+rabbitmqctl set_user_tags test_user administrator ; \
+
+rabbitmqadmin declare exchange name=FeedFetcher type=topic ; \
+rabbitmqadmin declare exchange name=CAPExchange type=topic ; \
+rabbitmqadmin declare queue name=CAPCollatorATOMQueue durable=true ; \
+rabbitmqadmin declare queue name=CAPCollatorRSSQueue durable=true ; \
+rabbitmqadmin declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorATOMQueue" routing_key="ATOMEntry.#" ; \
+rabbitmqadmin declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorRSSQueue" routing_key="RSSEntry.#" ; \
+rabbitmqctl set_permissions cap "stomp-subscription-.*" "stomp-subscription-.*" "(FeedFetcher|CAPExchange|stomp-subscription-.*)" ; \
+rabbitmqctl list_exchanges ; \
+rabbitmqctl list_queues ; \
+rabbitmqctl list_bindings ; \
+
+# Create vhosts
+# rabbitmqctl add_vhost <vhostname>
+# rabbitmqctl add_vhost dummy ; \
+
+# Set vhost permissions
+# rabbitmqctl set_permissions -p <vhostname> <username> ".*" ".*" ".*"
+# rabbitmqctl set_permissions -p dummy test_user ".*" ".*" ".*" ; \
+
+) &    
+rabbitmq-server $@
+
