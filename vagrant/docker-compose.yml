@@ -74,3 +74,9 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=adm
       - RABBITMQ_DEFAULT_PASS=admpass 
+
+  tomcat:
+    build: tomcat
+    restart: always
+    ports:
+      - 8080:8080
