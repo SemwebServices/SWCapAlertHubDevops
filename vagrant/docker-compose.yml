@@ -25,6 +25,7 @@ services:
       default:
         aliases:
           - pghost
+          - postgres
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
   # https://github.com/k-int/KBPlusG3/blob/dev-integration/SETUP-ES-DOCKER.txt
