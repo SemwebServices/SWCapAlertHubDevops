@@ -81,8 +81,18 @@ services:
         aliases:
           - rabbitmq
 
+  setup:
+    build: setup
+    restart: no
+    depends_on:
+      - rabbitmq
+      - es5
+      - postgres
+
   tomcat:
     build: tomcat
+    depends_on: 
+      - setup
     restart: always
     ports:
       - 8080:8080
