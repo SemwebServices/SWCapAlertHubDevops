@@ -6,5 +6,8 @@ ADD setup.sh /setup.sh
 # Set correct executable permissions
 RUN chmod +x /setup.sh
 
+# Add curl
+RUN apk add --no-cache curl
+
 # Define default command
 CMD ["/setup.sh"]
