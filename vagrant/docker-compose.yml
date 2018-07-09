@@ -83,7 +83,6 @@ services:
 
   setup:
     build: setup
-    restart: no
     depends_on:
       - rabbitmq
       - es5

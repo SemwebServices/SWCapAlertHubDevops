@@ -24,6 +24,9 @@ Vagrant.configure("2") do |config|
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/bionic64"
 
+  # INvestigating ways to cache the docker images - this won't do it, but might be a step along the way
+  # config.vm.synced_folder "docker", "/var/lib/docker"
+
   # config.vm.network "forwarded_port", guest: 3306, host: 3306
   # PostgreSQL - 5432
   config.vm.network "forwarded_port", guest: 5432, host: 5433

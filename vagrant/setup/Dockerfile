@@ -1,4 +1,4 @@
-FROM apline
+FROM alpine:latest
 
 # Add script to create default users / vhosts
 ADD setup.sh /setup.sh
