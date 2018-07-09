@@ -14,5 +14,14 @@ export status=`curl -I http://elasticsearch:9200/alerts 2>/dev/null | head -n 1 
 
 echo status : -$status-
 
+if [ "$status" -eq '404' ]; then 
+  echo Alerts index not present
+  sh ./config_es5.sh
+  echo Config_es script completed - check for presence of alerts
+  curl -I http://elasticsearch:9200/alerts
+else
+  echo "Alerts index detected"
+fi;
+
 echo All done - exit
 exit 0
