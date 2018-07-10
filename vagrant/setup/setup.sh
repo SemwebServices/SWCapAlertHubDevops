@@ -3,7 +3,7 @@
 echo This is the CAP Setup Script
 
 echo sleep 10 - Just because the ES container has started, does not mean ES is up and running yet
-sleep 10
+sleep 30
 
 
 echo run curl

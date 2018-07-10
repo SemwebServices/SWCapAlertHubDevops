@@ -89,7 +89,7 @@ services:
       - postgres
 
   tomcat:
-    image: semweb:caphub_tomcat
+    image: semweb/caphub_tomcat:latest
     depends_on: 
       - setup
     restart: always

@@ -1,11 +1,14 @@
 # Clear down
-# curl -XDELETE 'http://localhost:9200/alerts'
+# curl -XDELETE 'http://$ESHOST:9200/alerts'
 # Create an index called alerts
+
 echo Setting up alerts
 
-curl -XPUT 'http://localhost:9200/alerts'
+export ESHOST="elasticsearch"
+
+curl -XPUT "http://$ESHOST:9200/alerts"
 # Create a type mapping called alert
-curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d ' 
+curl -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d ' 
 { 
    "alert":{ 
       "properties":{ 
@@ -55,9 +58,9 @@ curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d '
    } 
 }' 
 echo Setting up alertsubscriptions
-# curl -XDELETE 'http://localhost:9200/alertssubscriptions'
-curl -XPUT 'http://localhost:9200/alertssubscriptions'
-curl -XPUT 'http://localhost:9200/alertssubscriptions/alertsubscription/_mapping' -d ' 
+# curl -XDELETE 'http://$ESHOST:9200/alertssubscriptions'
+curl -XPUT "http://$ESHOST:9200/alertssubscriptions"
+curl -XPUT "http://$ESHOST:9200/alertssubscriptions/alertsubscription/_mapping" -d ' 
 { 
    "alertsubscription":{ 
       "properties":{ 
@@ -76,9 +79,9 @@ curl -XPUT 'http://localhost:9200/alertssubscriptions/alertsubscription/_mapping
    } 
 }'
 echo Setting up gaz
-# curl -XDELETE 'http://localhost:9200/gazetteer'
-curl -XPUT 'http://localhost:9200/gazetteer'
-curl -XPUT 'http://localhost:9200/gazetteer/gazentry/_mapping' -d ' 
+# curl -XDELETE 'http://$ESHOST:9200/gazetteer'
+curl -XPUT "http://$ESHOST:9200/gazetteer"
+curl -XPUT "http://$ESHOST:9200/gazetteer/gazentry/_mapping" -d ' 
 { 
    "gazentry":{ 
       "properties":{ 
