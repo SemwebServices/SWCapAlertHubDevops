@@ -1,14 +1,9 @@
 # Clear down
-# curl -XDELETE 'http://$ESHOST:9200/alerts'
+curl -XDELETE 'http://localhost:9200/alerts'
 # Create an index called alerts
-
-echo Setting up alerts
-
-export ESHOST="elasticsearch"
-
-curl -XPUT "http://$ESHOST:9200/alerts"
+curl -XPUT 'http://localhost:9200/alerts'
 # Create a type mapping called alert
-curl -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d ' 
+curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d ' 
 { 
    "alert":{ 
       "properties":{ 
@@ -18,49 +13,48 @@ curl -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
             "type":"text", 
             "store":"yes" 
          }, 
-         "cc_polys" : {
-           "type": "geo_shape",
-           "tree": "quadtree",
-           "precision": "100m"
-         },
          "AlertMetadata":{
-	   "type":"nested",
-	   "properties":{
-	     "MatchedSubscriptions":{
-	       "type":"string",
-	       "index":"not_analyzed"
+           "properties":{
+             "MatchedSubscriptions":{
+               "type":"string",
+               "index":"not_analyzed"
              }
            }
          },
          "AlertBody":{
-           "type":"nested",
            "properties":{
              "info":{
-               "type":"nested",
                "properties":{
                  "parameter":{
-                   "type":"nested",
                    "properties":{
                      "value":{
                        "type":"text"
                      }
                    }
+                 },
+                 "area":{
+                   "properties":{
+                     "cc_polys" : {
+                       "type": "geo_shape",
+                       "tree": "quadtree",
+                       "precision": "100m"
+                     }
+                   }
                  }
                }
              },
-	     "identifier": {
-	       "type":"string",
-	       "index":"not_analyzed"
+             "identifier": {
+               "type":"string",
+               "index":"not_analyzed"
              }
            }
          }
       }
    } 
 }' 
-echo Setting up alertsubscriptions
-# curl -XDELETE 'http://$ESHOST:9200/alertssubscriptions'
-curl -XPUT "http://$ESHOST:9200/alertssubscriptions"
-curl -XPUT "http://$ESHOST:9200/alertssubscriptions/alertsubscription/_mapping" -d ' 
+curl -XDELETE 'http://localhost:9200/alertssubscriptions'
+curl -XPUT 'http://localhost:9200/alertssubscriptions'
+curl -XPUT 'http://localhost:9200/alertssubscriptions/alertsubscription/_mapping' -d ' 
 { 
    "alertsubscription":{ 
       "properties":{ 
@@ -78,10 +72,9 @@ curl -XPUT "http://$ESHOST:9200/alertssubscriptions/alertsubscription/_mapping" 
       }
    } 
 }'
-echo Setting up gaz
-# curl -XDELETE 'http://$ESHOST:9200/gazetteer'
-curl -XPUT "http://$ESHOST:9200/gazetteer"
-curl -XPUT "http://$ESHOST:9200/gazetteer/gazentry/_mapping" -d ' 
+curl -XDELETE 'http://localhost:9200/gazetteer'
+curl -XPUT 'http://localhost:9200/gazetteer'
+curl -XPUT 'http://localhost:9200/gazetteer/gazentry/_mapping' -d ' 
 { 
    "gazentry":{ 
       "properties":{ 
@@ -100,4 +93,3 @@ curl -XPUT "http://$ESHOST:9200/gazetteer/gazentry/_mapping" -d '
    } 
 }'
 
-echo All done
