@@ -1,6 +1,8 @@
 # Clear down
-curl -XDELETE 'http://localhost:9200/alerts'
+# curl -XDELETE 'http://localhost:9200/alerts'
 # Create an index called alerts
+echo Setting up alerts
+
 curl -XPUT 'http://localhost:9200/alerts'
 # Create a type mapping called alert
 curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d ' 
@@ -52,7 +54,8 @@ curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d '
       }
    } 
 }' 
-curl -XDELETE 'http://localhost:9200/alertssubscriptions'
+echo Setting up alertsubscriptions
+# curl -XDELETE 'http://localhost:9200/alertssubscriptions'
 curl -XPUT 'http://localhost:9200/alertssubscriptions'
 curl -XPUT 'http://localhost:9200/alertssubscriptions/alertsubscription/_mapping' -d ' 
 { 
@@ -72,7 +75,8 @@ curl -XPUT 'http://localhost:9200/alertssubscriptions/alertsubscription/_mapping
       }
    } 
 }'
-curl -XDELETE 'http://localhost:9200/gazetteer'
+echo Setting up gaz
+# curl -XDELETE 'http://localhost:9200/gazetteer'
 curl -XPUT 'http://localhost:9200/gazetteer'
 curl -XPUT 'http://localhost:9200/gazetteer/gazentry/_mapping' -d ' 
 { 
@@ -93,3 +97,4 @@ curl -XPUT 'http://localhost:9200/gazetteer/gazentry/_mapping' -d '
    } 
 }'
 
+echo All done
