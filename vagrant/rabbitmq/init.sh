@@ -17,12 +17,12 @@
 rabbitmqctl add_user cap cap; \
 rabbitmq-plugins enable rabbitmq_web_stomp; \
 rabbitmqctl set_user_tags cap administrator ; \
-rabbitmqadmin declare exchange name=FeedFetcher type=topic ; \
-rabbitmqadmin declare exchange name=CAPExchange type=topic ; \
-rabbitmqadmin declare queue name=CAPCollatorATOMQueue durable=true ; \
-rabbitmqadmin declare queue name=CAPCollatorRSSQueue durable=true ; \
-rabbitmqadmin declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorATOMQueue" routing_key="ATOMEntry.#" ; \
-rabbitmqadmin declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorRSSQueue" routing_key="RSSEntry.#" ; \
+rabbitmqadmin --username cap --password cap declare exchange name=FeedFetcher type=topic ; \
+rabbitmqadmin --username cap --password cap declare exchange name=CAPExchange type=topic ; \
+rabbitmqadmin --username cap --password cap declare queue name=CAPCollatorATOMQueue durable=true ; \
+rabbitmqadmin --username cap --password cap declare queue name=CAPCollatorRSSQueue durable=true ; \
+rabbitmqadmin --username cap --password cap declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorATOMQueue" routing_key="ATOMEntry.#" ; \
+rabbitmqadmin --username cap --password cap declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorRSSQueue" routing_key="RSSEntry.#" ; \
 rabbitmqctl set_permissions cap "stomp-subscription-.*" "stomp-subscription-.*" "(FeedFetcher|CAPExchange|stomp-subscription-.*)" ; \
 rabbitmqctl list_exchanges ; \
 rabbitmqctl list_queues ; \
