@@ -17,17 +17,18 @@
 rabbitmqctl add_user cap cap; \
 rabbitmq-plugins enable rabbitmq_web_stomp; \
 rabbitmqctl set_user_tags cap administrator ; \
+sleep 2; \
+rabbitmqctl set_permissions cap "stomp-subscription-.*" "stomp-subscription-.*" "(FeedFetcher|CAPExchange|stomp-subscription-.*)" ; \
+rabbitmqctl set_permissions cap ".*" ".*" ".*" ; \
 rabbitmqadmin --username cap --password cap declare exchange name=FeedFetcher type=topic ; \
 rabbitmqadmin --username cap --password cap declare exchange name=CAPExchange type=topic ; \
 rabbitmqadmin --username cap --password cap declare queue name=CAPCollatorATOMQueue durable=true ; \
 rabbitmqadmin --username cap --password cap declare queue name=CAPCollatorRSSQueue durable=true ; \
 rabbitmqadmin --username cap --password cap declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorATOMQueue" routing_key="ATOMEntry.#" ; \
 rabbitmqadmin --username cap --password cap declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorRSSQueue" routing_key="RSSEntry.#" ; \
-rabbitmqctl set_permissions cap "stomp-subscription-.*" "stomp-subscription-.*" "(FeedFetcher|CAPExchange|stomp-subscription-.*)" ; \
 rabbitmqctl list_exchanges ; \
 rabbitmqctl list_queues ; \
 rabbitmqctl list_bindings ; \
-rabbitmqctl set_permissions cap ".*" ".*" ".*" ; \
 ) &    
 rabbitmq-server $@
 
