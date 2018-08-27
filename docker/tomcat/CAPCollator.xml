@@ -1,4 +1,5 @@
 <Context path="/CAPCollator" reloadable="false">
+  <Parameter name="gtmcode" value="GTM-56M9D5W" override="false"/>
   <!--
     <Environment name="spring.config.location" value="/home/file.yaml" type="java.lang.String" />
     <Parameter name="grails.serverURL" value="https://host/appname" overide="false"/>
