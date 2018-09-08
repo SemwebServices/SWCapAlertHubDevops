@@ -15,3 +15,6 @@ GRANT ALL PRIVILEGES ON DATABASE capcollatorprod to capcollator;
 CREATE DATABASE feedfacade;
 GRANT ALL PRIVILEGES ON DATABASE feedfacade to feedfacade;
 
+-- DROP DATABASE feedfacade;
+CREATE DATABASE feedfacadedev;
+GRANT ALL PRIVILEGES ON DATABASE feedfacadedev to feedfacade;
