@@ -15,3 +15,11 @@ docker push semweb/caphub_tomcat:latest
 
 See also:
 https://hackernoon.com/publish-your-docker-image-to-docker-hub-10b826793faf
+
+
+THEN
+
+on the server
+
+log in as root and cd to /root/SWCapAlertHubDevops/vagrant, docker-compose stop, docker-compose pull, docker-compose up
+
