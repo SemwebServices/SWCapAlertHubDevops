@@ -99,3 +99,7 @@ services:
       - 8080:8080
     volumes:
       - /staticfeeds:/staticfeeds
+    environment:
+      - AWS_ACCESS_KEY_ID=unset
+      - AWS_SECRET_ACCESS_KEY=unset
+      - AWS_REGION=unset
