@@ -6,5 +6,6 @@
   -->
   <Parameter name="staticFeedsBaseUrl" value="https://cap-alerts.s3.eu-west-2.amazonaws.com" overide="false"/>
   <Parameter name="staticFeedsDir" value="/staticfeeds" overide="false"/>
+  <Parameter name="awsBucketName" value="cap-alerts" overide="false"/>
 </Context>
 
