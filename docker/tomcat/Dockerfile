@@ -1,4 +1,4 @@
-FROM tomcat:9.0-jre8
+FROM tomcat:9.0-jre10
 
 MAINTAINER ian.ibbotson@semweb.co
 
