@@ -10,7 +10,7 @@ services:
   #
   postgres:
     container_name: pg
-    image: postgres:latest
+    image: postgres:10
     restart: always
     environment:
       POSTGRES_USER: postgres
