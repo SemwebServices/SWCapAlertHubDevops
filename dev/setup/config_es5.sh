@@ -2,7 +2,7 @@ export ESHOST="elasticsearch"
 
 echo Update index referesh interval to 10s
 curl -s -XPUT 'http://localhost:9200/_all/_settings?preserve_existing=true' -d '{
-"index.refresh_interval" : "10"
+"index.refresh_interval" : "15"
 }'
 
 echo Clear down alerts
@@ -17,16 +17,15 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
    "alert":{ 
       "properties":{ 
          "id":{ 
-            "include_in_all":"false", 
-            "index":"not_analyzed", 
-            "type":"text", 
-            "store":"yes" 
+            "index":true,
+            "type":"keyword", 
+            "store":true
          }, 
          "AlertMetadata":{
            "properties":{
              "MatchedSubscriptions":{
-               "type":"string",
-               "index":"not_analyzed"
+               "type":"keyword",
+               "index":true
              }
            }
          },
@@ -53,8 +52,8 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
                }
              },
              "identifier": {
-               "type":"string",
-               "index":"not_analyzed"
+               "type":"keyword",
+               "index":true
              }
            }
          }
@@ -71,10 +70,9 @@ curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/alertsubscription/_mappin
    "alertsubscription":{ 
       "properties":{ 
          "id":{ 
-            "include_in_all":"false", 
-            "index":"not_analyzed", 
-            "type":"text", 
-            "store":"yes" 
+            "index":true,
+            "type":"keyword", 
+            "store":true
          }, 
          "subshape": {
             "type": "geo_shape",
@@ -94,10 +92,9 @@ curl -s -XPUT "http://$ESHOST:9200/gazetteer/gazentry/_mapping" -d '
    "gazentry":{ 
       "properties":{ 
          "id":{ 
-            "include_in_all":"false", 
-            "index":"not_analyzed", 
-            "type":"text", 
-            "store":"yes" 
+            "index":true,
+            "type":"keyword", 
+            "store":true
          }, 
          "subshape": {
             "type": "geo_shape",
