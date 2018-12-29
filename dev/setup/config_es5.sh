@@ -1,5 +1,10 @@
 export ESHOST="elasticsearch"
 
+echo Update index referesh interval to 10s
+curl -s -XPUT 'http://localhost:9200/_all/_settings?preserve_existing=true' -d '{
+"index.refresh_interval" : "10"
+}'
+
 echo Clear down alerts
 # Clear down
 curl -s -XDELETE "http://$ESHOST:9200/alerts"

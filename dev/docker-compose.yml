@@ -31,7 +31,7 @@ services:
   # see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
   cap_dev_es5:
     container_name: cap_dev_es5
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.8
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.14
     restart: "no"
     environment:
       - xpack.security.enabled=false
@@ -48,7 +48,7 @@ services:
       memlock:
         soft: -1
         hard: -1
-    mem_limit: 1g
+    mem_limit: 2g
     ports:
       - 9200:9200 
       - 9300:9300
@@ -67,7 +67,7 @@ services:
     build: cap_dev_rabbitmq
     hostname: rabbitmq
     # image: rabbitmq:management
-    restart: always
+    restart: "no"
     ports:
       - 15672:15672
       - 5672:5672
@@ -87,6 +87,7 @@ services:
 
   setup:
     build: setup
+    restart: "no"
     depends_on:
       - cap_dev_rabbitmq
       - cap_dev_es5
