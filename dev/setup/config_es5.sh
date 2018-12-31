@@ -45,7 +45,7 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
                      "cc_polys" : {
                        "type": "geo_shape",
                        "tree": "quadtree",
-                       "precision": "100m"
+                       "precision": "250m"
                      }
                    }
                  }
@@ -77,7 +77,7 @@ curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/alertsubscription/_mappin
          "subshape": {
             "type": "geo_shape",
             "tree": "quadtree",
-            "precision": "100m"
+            "precision": "250m"
          }
       }
    } 
@@ -99,7 +99,7 @@ curl -s -XPUT "http://$ESHOST:9200/gazetteer/gazentry/_mapping" -d '
          "subshape": {
             "type": "geo_shape",
             "tree": "quadtree",
-            "precision": "100m"
+            "precision": "250m"
          }
       }
    } 
