@@ -2,29 +2,30 @@ export ESHOST="elasticsearch"
 
 echo Update index referesh interval to 10s
 curl -s -XPUT 'http://localhost:9200/_all/_settings?preserve_existing=true' -d '{
-"index.refresh_interval" : "10"
+"index.refresh_interval" : "15"
 }'
 
+echo Clear down alerts
 # Clear down
-curl -XDELETE "http://$ESHOST:9200/alerts"
+curl -s -XDELETE "http://$ESHOST:9200/alerts"
+echo Create Alerts
 # Create an index called alerts
-curl -XPUT "http://$ESHOST:9200/alerts"
+curl -s -XPUT "http://$ESHOST:9200/alerts"
 # Create a type mapping called alert
-curl -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d ' 
+curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d ' 
 { 
    "alert":{ 
       "properties":{ 
          "id":{ 
-            "include_in_all":"false", 
-            "index":"not_analyzed", 
-            "type":"text", 
-            "store":"yes" 
+            "index":true,
+            "type":"keyword", 
+            "store":true
          }, 
          "AlertMetadata":{
            "properties":{
              "MatchedSubscriptions":{
-               "type":"string",
-               "index":"not_analyzed"
+               "type":"keyword",
+               "index":true
              }
            }
          },
@@ -44,59 +45,63 @@ curl -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
                      "cc_polys" : {
                        "type": "geo_shape",
                        "tree": "quadtree",
-                       "precision": "100m"
+                       "precision": "250m"
                      }
                    }
                  }
                }
              },
              "identifier": {
-               "type":"string",
-               "index":"not_analyzed"
+               "type":"keyword",
+               "index":true
              }
            }
          }
       }
    } 
 }' 
-curl -XDELETE "http://$ESHOST:9200/alertssubscriptions"
-curl -XPUT "http://$ESHOST:9200/alertssubscriptions"
-curl -XPUT "http://$ESHOST:9200/alertssubscriptions/alertsubscription/_mapping" -d ' 
+
+echo Clear down subscriptions
+curl -s -XDELETE "http://$ESHOST:9200/alertssubscriptions"
+echo Create subscriptions
+curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions"
+curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/alertsubscription/_mapping" -d ' 
 { 
    "alertsubscription":{ 
       "properties":{ 
          "id":{ 
-            "include_in_all":"false", 
-            "index":"not_analyzed", 
-            "type":"text", 
-            "store":"yes" 
+            "index":true,
+            "type":"keyword", 
+            "store":true
          }, 
          "subshape": {
             "type": "geo_shape",
             "tree": "quadtree",
-            "precision": "100m"
-         }
-      }
-   } 
-}'
-curl -XDELETE "http://$ESHOST:9200/gazetteer"
-curl -XPUT "http://$ESHOST:9200/gazetteer"
-curl -XPUT "http://$ESHOST:9200/gazetteer/gazentry/_mapping" -d ' 
-{ 
-   "gazentry":{ 
-      "properties":{ 
-         "id":{ 
-            "include_in_all":"false", 
-            "index":"not_analyzed", 
-            "type":"text", 
-            "store":"yes" 
-         }, 
-         "subshape": {
-            "type": "geo_shape",
-            "tree": "quadtree",
-            "precision": "100m"
+            "precision": "250m"
          }
       }
    } 
 }'
 
+echo Clear down gaz
+curl -s -XDELETE "http://$ESHOST:9200/gazetteer"
+echo Create gaz
+curl -s -XPUT "http://$ESHOST:9200/gazetteer"
+curl -s -XPUT "http://$ESHOST:9200/gazetteer/gazentry/_mapping" -d ' 
+{ 
+   "gazentry":{ 
+      "properties":{ 
+         "id":{ 
+            "index":true,
+            "type":"keyword", 
+            "store":true
+         }, 
+         "subshape": {
+            "type": "geo_shape",
+            "tree": "quadtree",
+            "precision": "250m"
+         }
+      }
+   } 
+}'
+echo CAP ES Setup script completed
