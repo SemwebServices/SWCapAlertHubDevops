@@ -123,6 +123,7 @@ services:
       - AWS_ACCESS_KEY_ID=unset
       - AWS_SECRET_ACCESS_KEY=unset
       - AWS_REGION=unset
+      - defaultAdmPassword=91DeployItASAP
     logging:
       driver: "json-file"
       options:

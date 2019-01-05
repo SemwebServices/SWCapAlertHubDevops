@@ -5,6 +5,11 @@ curl -s -XPUT 'http://localhost:9200/_all/_settings?preserve_existing=true' -d '
 "index.refresh_interval" : "15"
 }'
 
+echo Clear down events
+curl -s -XDELETE "http://$ESHOST:9200/events"
+echo Create events
+curl -s -XPUT "http://$ESHOST:9200/events"
+
 echo Clear down alerts
 # Clear down
 curl -s -XDELETE "http://$ESHOST:9200/alerts"
