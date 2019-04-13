@@ -71,6 +71,10 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+      # Stomp
+      - 61613:61613
+      # WebStomp
+      - 15674:15674
     environment:
       - RABBITMQ_DEFAULT_USER=adm
       - RABBITMQ_DEFAULT_PASS=admpass
