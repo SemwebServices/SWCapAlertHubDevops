@@ -24,8 +24,10 @@ rabbitmqadmin --username cap --password cap declare exchange name=FeedFetcher ty
 rabbitmqadmin --username cap --password cap declare exchange name=CAPExchange type=topic ; \
 rabbitmqadmin --username cap --password cap declare queue name=CAPCollatorATOMQueue durable=true ; \
 rabbitmqadmin --username cap --password cap declare queue name=CAPCollatorRSSQueue durable=true ; \
+rabbitmqadmin --username cap --password cap declare queue name=FeedFeedbackQueue durable=true ; \
 rabbitmqadmin --username cap --password cap declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorATOMQueue" routing_key="ATOMEntry.#" ; \
 rabbitmqadmin --username cap --password cap declare binding source="CAPExchange" destination_type="queue" destination="CAPCollatorRSSQueue" routing_key="RSSEntry.#" ; \
+rabbitmqadmin --username cap --password cap declare binding source="CAPExchange" destination_type="queue" destination="FeedFeedbackQueue" routing_key="FFFeedback.#" ; \
 rabbitmqctl list_exchanges ; \
 rabbitmqctl list_queues ; \
 rabbitmqctl list_bindings ; \
