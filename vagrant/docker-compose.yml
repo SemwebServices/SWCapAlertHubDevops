@@ -75,6 +75,8 @@ services:
   # docker run -d --restart always --hostname rabbitmq -p 15672:15672 -p 5672:5672 --name rabbitmq -e RABBITMQ_DEFAULT_USER=adm -e RABBITMQ_DEFAULT_PASS=admpass rabbitmq:management
   # See also
   # http://mpas.github.io/post/2015/06/11/20150611_docker-rabbitmq-default-users/
+  # also https://stackoverflow.com/questions/39816899/docker-official-tomcat-image-modify-server-xml-and-add-jar-to-lib-folder
+  # also COPY server.xml /usr/local/tomcat/conf/
   rabbitmq:
     container_name: rabbitmq
     build: rabbitmq
@@ -124,6 +126,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=unset
       - AWS_REGION=unset
       - defaultAdmPassword=91DeployItASAP
+      - JAVA_OPTS=-Dfile.encoding=UTF-8
     logging:
       driver: "json-file"
       options:
