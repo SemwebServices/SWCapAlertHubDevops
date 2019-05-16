@@ -31,6 +31,9 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
              "MatchedSubscriptions":{
                "type":"keyword",
                "index":true
+             },
+             "expires":{
+               "type":"date"
              }
            }
          },
