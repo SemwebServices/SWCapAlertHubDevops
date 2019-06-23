@@ -23,3 +23,5 @@ on the server
 
 log in as root and cd to /root/SWCapAlertHubDevops/vagrant, docker-compose stop, docker-compose pull, docker-compose up
 
+docker-compose down -v -- To clear down volumes and do a full reset
+
