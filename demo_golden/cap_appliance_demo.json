@@ -1,0 +1,23 @@
+{
+    "variables": {
+      "name": "cap_appliance_demo",
+      "source_ami": "ami-8c5eb2eb",
+      "region":"eu-west-2"
+    },
+    "builders": [{
+      "type": "amazon-ebs",
+      "ami_name": "{{user `name`}}",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "instance_type": "t2.micro",
+      "communicator": "ssh",
+      "ssh_username": "ubuntu",
+      "run_tags":{"Name":"packer-image"}
+    }],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": ["sudo yum install -y nginx","sudo systemctl enable nginx", "sudo systemctl start nginx"]
+        }
+      ]
+  }
