@@ -10,6 +10,8 @@
       "region": "{{user `region`}}",
       "source_ami": "{{user `source_ami`}}",
       "instance_type": "t2.micro",
+      "force_deregister": "true",
+      "force_delete_snapshot": "true",
       "communicator": "ssh",
       "ssh_username": "ubuntu",
       "run_tags":{"Name":"packer-image"}
@@ -17,7 +19,25 @@
     "provisioners": [
         {
             "type": "shell",
-            "inline": ["sudo yum install -y nginx","sudo systemctl enable nginx", "sudo systemctl start nginx"]
+            "inline": [
+                       "sudo ucf --purge /boot/grub/menu.lst",
+                       "sudo apt-get -y update",
+                       "sudo DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES apt-get -y -q dist-upgrade"]
+        },
+        {
+            "type": "shell",
+            "inline": [
+                       "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q remove docker docker-engine docker.io",
+                       "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q install apt-transport-https ca-certificates curl software-properties-common",
+                       "sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
+                       "sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable\" ",
+                       "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q update",
+                       "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q install docker-ce",
+                       "sudo curl -L \"https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
+                       "sudo chmod +x /usr/local/bin/docker-compose",
+                       "sudo docker-compose --version",
+                       "echo Done"
+                      ]
         }
       ]
   }
