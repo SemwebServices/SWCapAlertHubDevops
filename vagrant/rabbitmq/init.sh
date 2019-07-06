@@ -18,7 +18,7 @@ rabbitmqctl add_user cap cap; \
 rabbitmq-plugins enable rabbitmq_web_stomp; \
 rabbitmqctl set_user_tags cap administrator ; \
 sleep 2; \
-echo Perform setup; \n
+echo Perform setup; \
 rabbitmqctl set_permissions cap "stomp-subscription-.*" "stomp-subscription-.*" "(FeedFetcher|CAPExchange|stomp-subscription-.*)" ; \
 rabbitmqctl set_permissions cap ".*" ".*" ".*" ; \
 echo Declare exchanges; \
