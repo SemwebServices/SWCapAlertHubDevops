@@ -43,6 +43,7 @@
                        "echo sudo to self to get the new group membership",
                        "sudo su - ubuntu -c \"cd SWCapAlertHubDevops/vagrant; docker-compose up -d\"",
                        "sudo wget \"https://raw.githubusercontent.com/SemwebServices/SWCapAlertHubDevops/master/demo_golden/nginx_default.conf\" -O /etc/nginx/sites-available/default",
+                       "sudo mkdir -p /var/www/html/cap; chmod ugo+rwx /var/www/html/cap",
                        "echo Done"
                       ]
         }

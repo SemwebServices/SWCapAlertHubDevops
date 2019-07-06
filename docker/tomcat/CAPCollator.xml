@@ -3,9 +3,9 @@
   <!--
     <Environment name="spring.config.location" value="/home/file.yaml" type="java.lang.String" />
     <Parameter name="grails.serverURL" value="https://host/appname" overide="false"/>
+    <Parameter name="awsBucketName" value="cap-alerts" overide="false"/>
   -->
   <Parameter name="staticFeedsBaseUrl" value="https://cap-alerts.s3.eu-west-2.amazonaws.com" overide="false"/>
-  <Parameter name="staticFeedsDir" value="/staticfeeds" overide="false"/>
-  <Parameter name="awsBucketName" value="cap-alerts" overide="false"/>
+  <Parameter name="staticFeedsDir" value="/var/www/html/cap" overide="false"/>
 </Context>
 

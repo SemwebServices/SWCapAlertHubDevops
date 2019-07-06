@@ -6,6 +6,7 @@ curl -XPUT 'http://localhost:9200/alerts'
 curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d ' 
 { 
    "alert":{ 
+      "date_detection": false,
       "properties":{ 
          "id":{ 
             "include_in_all":"false", 
@@ -24,6 +25,12 @@ curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d '
 	     "MatchedSubscriptions":{
 	       "type":"string",
 	       "index":"not_analyzed"
+             },
+             "Expires":{
+               "type":"date"
+             },
+             "Effective":{
+               "type":"date"
              }
            }
          },
@@ -40,12 +47,21 @@ curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d '
                        "type":"text"
                      }
                    }
+                 },
+                 "effective":{
+                   "type":"date"
+                 },
+                 "expires":{
+                   "type":"date"
                  }
                }
              },
 	     "identifier": {
 	       "type":"string",
 	       "index":"not_analyzed"
+             },
+             "sent":{
+               "type":"date"
              }
            }
          }
