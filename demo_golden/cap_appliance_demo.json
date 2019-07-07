@@ -1,13 +1,15 @@
 {
     "variables": {
       "name": "cap_appliance_demo",
-      "source_ami": "ami-8c5eb2eb",
-      "region":"eu-west-2"
+      "source_ami": "ami-0c30afcb7ab02233d",
+      "region":"eu-west-2",
+      "profile":"semweb"
     },
     "builders": [{
       "type": "amazon-ebs",
       "ami_name": "{{user `name`}}",
       "region": "{{user `region`}}",
+      "profile": "{{user `profile`}}",
       "source_ami": "{{user `source_ami`}}",
       "instance_type": "m5.large",
       "force_deregister": "true",
