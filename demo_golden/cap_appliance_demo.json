@@ -1,8 +1,8 @@
 {
     "variables": {
       "name": "cap_appliance_demo",
-      "source_ami": "ami-0c30afcb7ab02233d",
-      "region":"eu-west-2",
+      "source_ami": "ami-0986c2ac728528ac2",
+      "region":"us-east-2",
       "profile":"semweb"
     },
     "builders": [{
@@ -30,7 +30,6 @@
             "type": "shell",
             "inline": [
                        "sudo echo \"vm.max_map_count=262144\" | sudo tee -a /etc/sysctl.conf",
-                       "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q remove docker docker-engine docker.io",
                        "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q install apt-transport-https ca-certificates curl software-properties-common git nginx wget",
                        "sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
                        "sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable\" ",
