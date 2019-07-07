@@ -2,7 +2,7 @@ FROM tomcat:9.0-jre8
 
 MAINTAINER ian.ibbotson@semweb.co
 
-ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF8" \
+ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8" \
     LANG="C.UTF-8" \
     JAVA_OPTS="-server -Djava.awt.headless=true -XX:+UseG1GC -Dfile.encoding=UTF-8"
 
