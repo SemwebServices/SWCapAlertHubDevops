@@ -20,6 +20,7 @@ curl -s -XPUT "http://$ESHOST:9200/alerts"
 curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d ' 
 { 
    "alert":{ 
+      "date_detection": false,
       "properties":{ 
          "id":{ 
             "index":true,
@@ -31,6 +32,12 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
              "MatchedSubscriptions":{
                "type":"keyword",
                "index":true
+             },
+             "Expires":{
+               "type":"date"
+             },
+             "Effective":{
+               "type":"date"
              }
            }
          },
@@ -53,6 +60,12 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
                        "precision": "250m"
                      }
                    }
+                 },
+                 "effective":{
+                   "type":"date"
+                 },
+                 "expires":{
+                   "type":"date"
                  }
                }
              },
@@ -61,6 +74,9 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d '
                "index":true
              }
            }
+         },
+         "evtTimestamp":{
+           "type":"date"
          }
       }
    } 

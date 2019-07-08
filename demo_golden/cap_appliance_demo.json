@@ -1,13 +1,15 @@
 {
     "variables": {
       "name": "cap_appliance_demo",
-      "source_ami": "ami-8c5eb2eb",
-      "region":"eu-west-2"
+      "source_ami": "ami-0986c2ac728528ac2",
+      "region":"us-east-2",
+      "profile":"semweb"
     },
     "builders": [{
       "type": "amazon-ebs",
       "ami_name": "{{user `name`}}",
       "region": "{{user `region`}}",
+      "profile": "{{user `profile`}}",
       "source_ami": "{{user `source_ami`}}",
       "instance_type": "m5.large",
       "force_deregister": "true",
@@ -28,7 +30,6 @@
             "type": "shell",
             "inline": [
                        "sudo echo \"vm.max_map_count=262144\" | sudo tee -a /etc/sysctl.conf",
-                       "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q remove docker docker-engine docker.io",
                        "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q install apt-transport-https ca-certificates curl software-properties-common git nginx wget",
                        "sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
                        "sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable\" ",
@@ -43,6 +44,10 @@
                        "echo sudo to self to get the new group membership",
                        "sudo su - ubuntu -c \"cd SWCapAlertHubDevops/vagrant; docker-compose up -d\"",
                        "sudo wget \"https://raw.githubusercontent.com/SemwebServices/SWCapAlertHubDevops/master/demo_golden/nginx_default.conf\" -O /etc/nginx/sites-available/default",
+                       "sudo mkdir -p /var/www/html/cap",
+                       "sudo chmod ugo+rwx /var/www/html/cap",
+                       "echo Wait for the setup script to complete",
+                       "sleep 120",
                        "echo Done"
                       ]
         }

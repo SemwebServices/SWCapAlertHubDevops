@@ -2,9 +2,9 @@
 
 echo This is the CAP Setup Script
 
-echo sleep 10 - Just because the ES container has started, does not mean ES is up and running yet
+echo sleep 30 - Just because the ES container has started, does not mean ES is up and running yet
 sleep 30
-
+echo Done sleeping.. continue
 
 echo run curl
 curl -I http://elasticsearch:9200/alerts
