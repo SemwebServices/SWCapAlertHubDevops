@@ -127,10 +127,10 @@ services:
     volumes:
       - /staticfeeds:/staticfeeds
     environment:
-      - AWS_ACCESS_KEY_ID=unset
-      - AWS_SECRET_ACCESS_KEY=unset
-      - AWS_REGION=unset
-      - defaultAdmPassword=91DeployItASAP
+#      - AWS_ACCESS_KEY_ID=unset
+#      - AWS_SECRET_ACCESS_KEY=unset
+#      - AWS_REGION=unset
+#      - defaultAdmPassword=91DeployItASAP
       - JAVA_OPTS=-Dfile.encoding=UTF-8
       - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
       - LANG=C.UTF-8 
