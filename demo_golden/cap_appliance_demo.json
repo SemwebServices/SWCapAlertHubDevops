@@ -1,7 +1,7 @@
 {
     "variables": {
       "name": "cap_appliance_demo",
-      "source_ami": "ami-0986c2ac728528ac2",
+      "source_ami": "ami-026c8acd92718196b",
       "region":"us-east-1",
       "profile":"semweb"
     },
