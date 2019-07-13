@@ -150,7 +150,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - /var/www/html/cap:/staticfeeds
+      - /var/www/html/cap:/var/www/html/cap
     environment:
 #      - AWS_ACCESS_KEY_ID=unset
 #      - AWS_SECRET_ACCESS_KEY=unset
