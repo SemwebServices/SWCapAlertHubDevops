@@ -3,15 +3,15 @@
 version: "2.1"
 
 volumes:
-  pgdata:
-  esdata:
+  cappgdata:
+  capesdata:
 
 services:
   #
   # docker exec -it pg psql -u postgres
   #
   postgres:
-    container_name: pg
+    container_name: cappg
     image: postgres:11
     restart: always
     environment:
@@ -19,7 +19,7 @@ services:
       POSTGRES_PASSWORD: pa55w0rd
       POSTGRES_DB: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - cappgdata:/var/lib/postgresql/data
       - ./pginit:/docker-entrypoint-initdb.d/
     ports:
       - 5432:5432
@@ -74,7 +74,7 @@ services:
       - 9200:9200 
       - 9300:9300
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - capesdata:/usr/share/elasticsearch/data
     networks:
       default:
         aliases:
