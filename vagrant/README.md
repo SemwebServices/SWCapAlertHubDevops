@@ -28,3 +28,6 @@ VBoxManage showvminfo UUID
 If you should edit the Dockerfiles for rabbit etc, force a rebuild on the docker-compose image with
 docker-compose -f ./docker-compose-dev-setup.yml up --force-recreate --build
 
+
+docker exec -it cappg psql -U postgres capcollatorprod
+
