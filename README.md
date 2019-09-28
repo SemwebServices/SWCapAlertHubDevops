@@ -12,6 +12,9 @@ Start it with
     docker-compose -f ./docker-compose-dev-setup.yml up
 
 
+To take down the image and clean up entirely
+
+    docker-compose -f ./docker-compose-dev-setup.yml down -v
 
 All the scripts are predicated on having a pgsql user with the following kind of setup::
 
