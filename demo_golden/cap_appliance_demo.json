@@ -1,10 +1,9 @@
 {
     "variables": {
-      "name": "cap_appliance_demo",
-      "source_ami": "ami-077a5b1762a2dde35",
-      "source_ami_us_east_1": "ami-026c8acd92718196b",
+      "name": "cap-appliance/all-in-one/v1.1",
       "region":"eu-west-2",
-      "other_regions":"us-east-1",
+      "destination_regions":"eu-west-2, us-east-1",
+      "other_regions":"us-east-1/ami-026c8acd92718196b, eu-west-2/ami-077a5b1762a2dde35",
       "profile":"semweb"
     },
     "builders": [{
@@ -12,7 +11,15 @@
       "ami_name": "{{user `name`}}",
       "region": "{{user `region`}}",
       "profile": "{{user `profile`}}",
-      "source_ami": "{{user `source_ami`}}",
+      "source_ami_filter": {
+        "filters": {
+          "name":"ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
+          "root-device-type": "ebs",
+          "virtualization-type": "hvm"
+        },
+        "most_recent":true,
+        "owners":"099720109477"
+      },
       "instance_type": "m5.large",
       "force_deregister": "true",
       "force_delete_snapshot": "true",
