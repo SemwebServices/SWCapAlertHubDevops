@@ -1,13 +1,15 @@
 {
     "variables": {
       "name": "cap-appliance/all-in-one/v1.1",
-      "destination_regions":"eu-west-2, us-east-1",
-      "profile":"semweb"
+      "destination_regions":"eu-west-2,us-east-1",
+      "profile":"semweb",
+      "notes":"ami_groups=all makes the image public"
     },
     "builders": [{
       "type": "amazon-ebs",
       "ami_name": "{{user `name`}}",
       "ami_regions": "{{user `destination_regions`}}",
+      "ami_groups": ["all"],
       "profile": "{{user `profile`}}",
       "source_ami_filter": {
         "filters": {
