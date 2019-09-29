@@ -3,14 +3,16 @@ THis directory defines the caphub_tomcat image which is published on dockerhub a
 
 From this directory, run
 
-    docker build .
+    docker login
+    docker build -t semweb/caphub_tomcat:v1.2 -t semweb/caphub_tomcat:latest .
+    docker push semweb/caphub_tomcat
 
+
+Old way
+#    docker build .
 to create the image. NOte the returned <<ImageID>>
-
-docker login
-
+docker tag <<ImageID>> semweb/caphub_tomcat:v1.1
 docker tag <<ImageID>> semweb/caphub_tomcat:latest
-
 docker push semweb/caphub_tomcat:latest
 
 See also:
