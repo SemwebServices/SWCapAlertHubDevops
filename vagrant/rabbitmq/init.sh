@@ -17,6 +17,7 @@
 echo Commence Rabbit setup; \
 rabbitmqctl add_user cap cap; \
 rabbitmq-plugins enable rabbitmq_web_stomp; \
+rabbitmq-plugins enable rabbitmq_web_mqtt; \
 rabbitmqctl set_user_tags cap administrator ; \
 sleep 2; \
 echo Perform setup; \
