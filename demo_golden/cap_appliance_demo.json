@@ -1,8 +1,7 @@
 {
     "variables": {
       "name": "cap-appliance/all-in-one/v1.2",
-      "destination_regions":"us-east-1",
-      "prod_destination_regions":"eu-west-2,us-east-1",
+      "destination_regions":"eu-west-2,us-east-1",
       "profile":"semweb",
       "notes":"ami_groups=all makes the image public"
     },

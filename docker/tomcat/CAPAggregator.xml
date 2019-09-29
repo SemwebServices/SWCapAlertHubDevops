@@ -6,7 +6,7 @@
     awsBucketName replaced by defaultAwsBucketName and is now used to populate a setting instead.
     <Parameter name="awsBucketName" value="cap-alerts" overide="false"/>
   <Parameter name="staticFeedsBaseUrl" value="https://cap-alerts.s3.eu-west-2.amazonaws.com" overide="false"/>
-  <Parameter name="staticFeedsDir" value="/var/www/html/cap" overide="false"/>
   -->
+  <Parameter name="staticFeedsDir" value="/var/www/html/cap" overide="false"/>
 </Context>
 
