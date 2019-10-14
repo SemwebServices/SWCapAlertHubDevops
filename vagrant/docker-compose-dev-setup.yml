@@ -39,9 +39,9 @@ services:
   # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
   # https://github.com/k-int/KBPlusG3/blob/dev-integration/SETUP-ES-DOCKER.txt
   # see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
-  cap_es5:
-    container_name: cap_es5
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.16
+  cap_es7:
+    container_name: cap_es7
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
     restart: 'no'
     environment:
       - xpack.security.enabled=false
@@ -108,5 +108,5 @@ services:
     build: setup
     depends_on:
       - cap_rabbitmq
-      - cap_es5
+      - cap_es7
       - cap_postgres
