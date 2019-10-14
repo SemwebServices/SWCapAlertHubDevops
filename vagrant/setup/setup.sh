@@ -16,7 +16,7 @@ echo status : -$status-
 
 if [ "$status" -eq '404' ]; then 
   echo Alerts index not present
-  sh ./config_es5.sh
+  sh ./config_es7.sh
   echo Config_es script completed - check for presence of alerts
   curl -I http://elasticsearch:9200/alerts
 else

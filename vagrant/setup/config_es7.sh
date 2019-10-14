@@ -17,7 +17,7 @@ echo Create Alerts
 # Create an index called alerts
 curl -s -XPUT "http://$ESHOST:9200/alerts"
 # Create a type mapping called alert
-curl -s -XPUT "http://$ESHOST:9200/alerts/alert/_mapping" -d ' 
+curl -s -XPUT "http://$ESHOST:9200/alerts/_mapping/_doc" -d ' 
 { 
    "alert":{ 
       "date_detection": false,
@@ -86,7 +86,7 @@ echo Clear down subscriptions
 curl -s -XDELETE "http://$ESHOST:9200/alertssubscriptions"
 echo Create subscriptions
 curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions"
-curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/alertsubscription/_mapping" -d ' 
+curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/_mapping/_doc" -d ' 
 { 
    "alertsubscription":{ 
       "properties":{ 
@@ -108,7 +108,7 @@ echo Clear down gaz
 curl -s -XDELETE "http://$ESHOST:9200/gazetteer"
 echo Create gaz
 curl -s -XPUT "http://$ESHOST:9200/gazetteer"
-curl -s -XPUT "http://$ESHOST:9200/gazetteer/gazentry/_mapping" -d ' 
+curl -s -XPUT "http://$ESHOST:9200/gazetteer/_mapping/_doc" -d ' 
 { 
    "gazentry":{ 
       "properties":{ 
