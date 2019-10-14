@@ -1,7 +1,7 @@
 export ESHOST="elasticsearch"
 
 echo Update index referesh interval to 10s
-curl -s -XPUT 'http://localhost:9200/_all/_settings?preserve_existing=true' -d '{
+curl -s -XPUT 'http://localhost:9200/_all/_settings?preserve_existing=true' -H 'Content-Type: application/json' -d '{
 "index.refresh_interval" : "15"
 }'
 
@@ -17,9 +17,8 @@ echo Create Alerts
 # Create an index called alerts
 curl -s -XPUT "http://$ESHOST:9200/alerts"
 # Create a type mapping called alert
-curl -s -XPUT "http://$ESHOST:9200/alerts/_mapping/_doc" -d ' 
+curl -s -XPUT "http://$ESHOST:9200/alerts/_mapping/_doc" -H 'Content-Type: application/json' -d ' 
 { 
-   "alert":{ 
       "date_detection": false,
       "properties":{ 
          "id":{ 
@@ -79,16 +78,14 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/_mapping/_doc" -d '
            "type":"date"
          }
       }
-   } 
 }' 
 
 echo Clear down subscriptions
 curl -s -XDELETE "http://$ESHOST:9200/alertssubscriptions"
 echo Create subscriptions
 curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions"
-curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/_mapping/_doc" -d ' 
+curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/_mapping/_doc" -H 'Content-Type: application/json' -d ' 
 { 
-   "alertsubscription":{ 
       "properties":{ 
          "id":{ 
             "index":true,
@@ -101,16 +98,14 @@ curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/_mapping/_doc" -d '
             "precision": "250m"
          }
       }
-   } 
 }'
 
 echo Clear down gaz
 curl -s -XDELETE "http://$ESHOST:9200/gazetteer"
 echo Create gaz
 curl -s -XPUT "http://$ESHOST:9200/gazetteer"
-curl -s -XPUT "http://$ESHOST:9200/gazetteer/_mapping/_doc" -d ' 
+curl -s -XPUT "http://$ESHOST:9200/gazetteer/_mapping/_doc" -H 'Content-Type: application/json' -d ' 
 { 
-   "gazentry":{ 
       "properties":{ 
          "id":{ 
             "index":true,
@@ -123,6 +118,5 @@ curl -s -XPUT "http://$ESHOST:9200/gazetteer/_mapping/_doc" -d '
             "precision": "250m"
          }
       }
-   } 
 }'
 echo CAP ES Setup script completed
