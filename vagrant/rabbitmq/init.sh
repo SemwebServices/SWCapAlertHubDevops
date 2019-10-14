@@ -16,6 +16,8 @@
 #
 # rabbitmq-plugins enable rabbitmq_web_mqtt; \
 #
+# echo Dont forget that docker-compose might not rebuild this container - use docker-compose build if you edit this file
+#
 ( sleep 15 ; \
 echo Commence Rabbit setup; \
 rabbitmqctl add_user cap cap; \
