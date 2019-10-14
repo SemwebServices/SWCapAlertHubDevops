@@ -3,7 +3,7 @@ curl -XDELETE 'http://localhost:9200/alerts'
 # Create an index called alerts
 curl -XPUT 'http://localhost:9200/alerts'
 # Create a type mapping called alert
-curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d ' 
+curl -XPUT 'http://localhost:9200/alerts/_mapping/_doc' -d ' 
 { 
    "alert":{ 
       "date_detection": false,
@@ -70,7 +70,7 @@ curl -XPUT 'http://localhost:9200/alerts/alert/_mapping' -d '
 }' 
 curl -XDELETE 'http://localhost:9200/alertssubscriptions'
 curl -XPUT 'http://localhost:9200/alertssubscriptions'
-curl -XPUT 'http://localhost:9200/alertssubscriptions/alertsubscription/_mapping' -d ' 
+curl -XPUT 'http://localhost:9200/alertssubscriptions/_mapping/_doc' -d ' 
 { 
    "alertsubscription":{ 
       "properties":{ 
@@ -90,7 +90,7 @@ curl -XPUT 'http://localhost:9200/alertssubscriptions/alertsubscription/_mapping
 }'
 curl -XDELETE 'http://localhost:9200/gazetteer'
 curl -XPUT 'http://localhost:9200/gazetteer'
-curl -XPUT 'http://localhost:9200/gazetteer/gazentry/_mapping' -d ' 
+curl -XPUT 'http://localhost:9200/gazetteer/_mapping/_doc' -d ' 
 { 
    "gazentry":{ 
       "properties":{ 
