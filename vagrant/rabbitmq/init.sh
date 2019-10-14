@@ -13,10 +13,14 @@
 # Set vhost permissions
 # rabbitmqctl set_permissions -p <vhostname> <username> ".*" ".*" ".*"
 # rabbitmqctl set_permissions -p dummy test_user ".*" ".*" ".*" ; \
+#
+# rabbitmq-plugins enable rabbitmq_web_mqtt; \
+#
 ( sleep 15 ; \
 echo Commence Rabbit setup; \
 rabbitmqctl add_user cap cap; \
 rabbitmq-plugins enable rabbitmq_web_stomp; \
+rabbitmq-plugins enable rabbitmq_management; \
 rabbitmqctl set_user_tags cap administrator ; \
 sleep 2; \
 echo Perform setup; \
