@@ -17,7 +17,7 @@ echo Create Alerts
 # Create an index called alerts
 curl -s -XPUT "http://$ESHOST:9200/alerts"
 # Create a type mapping called alert
-curl -s -XPUT "http://$ESHOST:9200/alerts/_mapping/_doc" -H 'Content-Type: application/json' -d ' 
+curl -s -XPUT "http://$ESHOST:9200/alerts/_mapping" -H 'Content-Type: application/json' -d ' 
 { 
       "date_detection": false,
       "properties":{ 
@@ -56,7 +56,8 @@ curl -s -XPUT "http://$ESHOST:9200/alerts/_mapping/_doc" -H 'Content-Type: appli
                      "cc_polys" : {
                        "type": "geo_shape",
                        "tree": "quadtree",
-                       "precision": "250m"
+                       "precision": "250m",
+                       "strategy" : "recursive"
                      }
                    }
                  },
@@ -84,7 +85,7 @@ echo Clear down subscriptions
 curl -s -XDELETE "http://$ESHOST:9200/alertssubscriptions"
 echo Create subscriptions
 curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions"
-curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/_mapping/_doc" -H 'Content-Type: application/json' -d ' 
+curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/_mapping" -H 'Content-Type: application/json' -d ' 
 { 
       "properties":{ 
          "id":{ 
@@ -95,7 +96,8 @@ curl -s -XPUT "http://$ESHOST:9200/alertssubscriptions/_mapping/_doc" -H 'Conten
          "subshape": {
             "type": "geo_shape",
             "tree": "quadtree",
-            "precision": "250m"
+            "precision": "250m",
+            "strategy" : "recursive"
          }
       }
 }'
@@ -104,7 +106,7 @@ echo Clear down gaz
 curl -s -XDELETE "http://$ESHOST:9200/gazetteer"
 echo Create gaz
 curl -s -XPUT "http://$ESHOST:9200/gazetteer"
-curl -s -XPUT "http://$ESHOST:9200/gazetteer/_mapping/_doc" -H 'Content-Type: application/json' -d ' 
+curl -s -XPUT "http://$ESHOST:9200/gazetteer/_mapping" -H 'Content-Type: application/json' -d ' 
 { 
       "properties":{ 
          "id":{ 
@@ -115,7 +117,8 @@ curl -s -XPUT "http://$ESHOST:9200/gazetteer/_mapping/_doc" -H 'Content-Type: ap
          "subshape": {
             "type": "geo_shape",
             "tree": "quadtree",
-            "precision": "250m"
+            "precision": "250m",
+            "strategy" : "recursive"
          }
       }
 }'
