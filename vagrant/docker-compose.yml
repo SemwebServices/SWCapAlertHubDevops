@@ -50,26 +50,13 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
     restart: always
     environment:
-      - xpack.security.enabled=false
-      - xpack.monitoring.enabled=false
-      - xpack.ml.enabled=false
-      - xpack.graph.enabled=false
-      - xpack.watcher.enabled=false
-      - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx2g -Dfile.encoding=UTF-8"
-      - discovery.zen.minimum_master_nodes=1
       - discovery.type=single-node 
       - cluster.name=elasticsearch
       - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
       - LC_ALL=en_US.UTF-8
       - LANG=en_US.UTF-8
       - LANGUAGE=en_US.UTF-8
-
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    mem_limit: 2g
     ports:
       - 9200:9200 
       - 9300:9300
