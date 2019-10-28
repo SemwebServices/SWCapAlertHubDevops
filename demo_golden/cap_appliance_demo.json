@@ -1,6 +1,6 @@
 {
     "variables": {
-      "name": "cap-appliance/all-in-one/v1.2",
+      "name": "cap-appliance/all-in-one/v1.3",
       "destination_regions":"eu-west-2,us-east-1",
       "profile":"semweb",
       "notes":"ami_groups=all makes the image public"
