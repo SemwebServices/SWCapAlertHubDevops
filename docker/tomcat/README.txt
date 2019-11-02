@@ -1,11 +1,13 @@
 THis directory defines the caphub_tomcat image which is published on dockerhub at https://hub.docker.com/r/semweb/caphub_tomcat/
 
 
+
 From this directory, run
 
     docker login
     docker build -t semweb/caphub_tomcat:v1.3 -t semweb/caphub_tomcat:latest .
-    docker push semweb/caphub_tomcat
+    docker push semweb/caphub_tomcat:v1.3
+    docker push semweb/caphub_tomcat:latest
 
 
 Old way
