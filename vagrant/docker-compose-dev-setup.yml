@@ -95,6 +95,9 @@ services:
   setup:
     build: setup
     depends_on:
-      - cap_rabbitmq
-      - cap_es7
-      - cap_postgres
+      cap_rabbitmq:
+        condition: service_healthy
+      cap_es7:
+        condition: service_healthy
+      cap_postgres:
+        condition: service_healthy

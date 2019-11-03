@@ -119,9 +119,12 @@ services:
   setup:
     build: setup
     depends_on:
-      - rabbitmq
-      - es7
-      - postgres
+      rabbitmq:
+        condition: service_healthy
+      es7:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     logging:
       driver: "json-file"
       options:
@@ -131,9 +134,12 @@ services:
   tomcat:
     image: semweb/caphub_tomcat:latest
     depends_on: 
-      - rabbitmq
-      - es7
-      - postgres
+      rabbitmq:
+        condition: service_healthy
+      es7:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     restart: always
     ports:
       - 8080:8080
