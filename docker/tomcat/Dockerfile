@@ -1,4 +1,4 @@
-FROM tomcat:9.0-jre8
+FROM tomcat:9-jdk11-adoptopenjdk-openj9
 
 MAINTAINER ian.ibbotson@semweb.co
 
