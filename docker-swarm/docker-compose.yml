@@ -1,0 +1,144 @@
+# -*- coding: utf-8 -*-
+
+# version: "2.1"
+version: "3.7"
+
+volumes:
+  cappgdata:
+  capesdata:
+
+services:
+  #
+  # docker exec -it pg psql -u postgres
+  #
+  postgres:
+    container_name: cappg
+    image: postgres:11
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pa55w0rd
+      POSTGRES_DB: postgres
+    volumes:
+      - cappgdata:/var/lib/postgresql/data
+      - ./pginit:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+    networks:
+      default:
+        aliases:
+          - pghost
+          - postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD-SHELL"
+        - "pg_isready --dbname=postgres --host=localhost --username=postgres"
+
+
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
+  # https://github.com/k-int/KBPlusG3/blob/dev-integration/SETUP-ES-DOCKER.txt
+  # see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
+  es7:
+    container_name: es7
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    restart: always
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx2g -Dfile.encoding=UTF-8"
+      - discovery.type=single-node 
+      - cluster.name=elasticsearch
+      - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+      - LC_ALL=en_US.UTF-8
+      - LANG=en_US.UTF-8
+      - LANGUAGE=en_US.UTF-8
+    ports:
+      - 9200:9200 
+      - 9300:9300
+    volumes:
+      - capesdata:/usr/share/elasticsearch/data
+    networks:
+      default:
+        aliases:
+          - eshost
+          - elasticsearch
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD-SHELL"
+        - "curl http://localhost:9200/_cluster/health | grep '.status.:.\\(green\\|yellow\\)'"
+
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: semweb/caphub_rabbit:latest
+    hostname: rabbitmq
+    # image: rabbitmq:management
+    restart: always
+    ports:
+      - 15672:15672 
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=adm
+      - RABBITMQ_DEFAULT_PASS=admpass 
+      - RABBITMQ_NODENAME=cap@rabbitmq
+    networks:
+      default:
+        aliases:
+          - rabbitmq
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "rabbitmqctl list_exchanges | grep CAPExchange"]
+      interval: 30s,
+      timeout: 10s
+      retries: 10
+
+  setup:
+    image: semweb/caphub_setup:latest
+    depends_on:
+      - "rabbitmq"
+      - "es7"
+      - "postgres"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+
+  tomcat:
+    image: semweb/caphub_tomcat:latest
+    depends_on: 
+      - "rabbitmq"
+      - "es7"
+      - "postgres"
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/www/html/cap:/var/www/html/cap
+    environment:
+      - JAVA_OPTS=-Dfile.encoding=UTF-8
+      - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+      - LANG=C.UTF-8 
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
