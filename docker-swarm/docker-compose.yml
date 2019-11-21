@@ -122,23 +122,19 @@ services:
         max-size: "500k"
         max-file: "3"
 
-  tomcat:
-    image: semweb/caphub_tomcat:latest
-    depends_on: 
+  feedfacade:
+    image: semweb/caphub_feedfacade:latest
+    depends_on:
+      - "rabbitmq"
+      - "postgres"
+    ports:
+      - 8081:8080
+
+  capCollator:
+    image: semweb/caphub_aggregator:latest
+    depends_on:
       - "rabbitmq"
       - "es7"
       - "postgres"
-    restart: always
     ports:
-      - 8080:8080
-    volumes:
-      - /var/www/html/cap:/var/www/html/cap
-    environment:
-      - JAVA_OPTS=-Dfile.encoding=UTF-8
-      - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
-      - LANG=C.UTF-8 
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "500k"
-        max-file: "3"
+      - 8082:8080 
