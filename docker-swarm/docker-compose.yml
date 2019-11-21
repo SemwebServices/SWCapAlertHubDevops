@@ -140,3 +140,8 @@ services:
       - 8082:8080 
     volumes:
       - staticFeeds: /var/www/html/cap 
+
+  nginx:
+    image: semweb/caphub_nginx:latest
+    ports:
+      - 80:80
