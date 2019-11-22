@@ -6,6 +6,7 @@ version: "3.7"
 volumes:
   cappgdata:
   capesdata:
+  staticfeeds:
 
 services:
   #
@@ -139,7 +140,7 @@ services:
     ports:
       - 8082:8080 
     volumes:
-      - staticFeeds: /var/www/html/cap 
+      - staticfeeds:/var/www/html/cap 
 
   nginx:
     image: semweb/caphub_nginx:latest
