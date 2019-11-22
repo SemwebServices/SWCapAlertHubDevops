@@ -5,16 +5,19 @@ docker login
 # docker push semweb/caphub_tomcat:v1
 # docker push semweb/caphub_tomcat:latest
 cd rabbitmq
+echo Buildig Rabbitmq `pwd`
 docker build -t semweb/caphub_rabbit:v1.0 -t semweb/caphub_rabbit:v1 -t semweb/caphub_rabbit:latest .
 docker push semweb/caphub_rabbit:v1.0
 docker push semweb/caphub_rabbit:v1
 docker push semweb/caphub_rabbit:latest
-cd setup
+cd ../setup
+echo Buildig Setup `pwd`
 docker build -t semweb/caphub_setup:v1.0 -t semweb/caphub_setup:v1 -t semweb/caphub_setup:latest .
 docker push semweb/caphub_setup:v1.0
 docker push semweb/caphub_setup:v1
 docker push semweb/caphub_setup:latest
-cd nginx
+cd ../nginx
+echo Buildig Nginx `pwd`
 docker build -t semweb/caphub_nginx:v1.0 -t semweb/caphub_nginx:v1 -t semweb/caphub_nginx:latest .
 docker push semweb/caphub_nginx:v1.0
 docker push semweb/caphub_nginx:v1
