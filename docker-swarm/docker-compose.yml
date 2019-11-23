@@ -123,21 +123,19 @@ services:
         max-size: "500k"
         max-file: "3"
 
-  feedfacade:
+  feedFacade:
     image: semweb/caphub_feedfacade:latest
     depends_on:
       - "rabbitmq"
       - "postgres"
     ports:
       - 8081:8080
-    expose:
-      - 8080
     networks:
       default:
         aliases:
           - ffhost
 
-  capCollator:
+  capAggregator:
     image: semweb/caphub_aggregator:latest
     depends_on:
       - "rabbitmq"
@@ -145,8 +143,6 @@ services:
       - "postgres"
     ports:
       - 8082:8080 
-    expose:
-      - 8080
     volumes:
       - staticfeeds:/var/www/html/cap 
     networks:
@@ -158,3 +154,5 @@ services:
     image: semweb/caphub_nginx:latest
     ports:
       - 80:80
+    volumes:
+      - staticfeeds:/var/www/html/cap 
