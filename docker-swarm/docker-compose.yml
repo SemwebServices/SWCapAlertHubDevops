@@ -155,4 +155,4 @@ services:
     ports:
       - 80:80
     volumes:
-      - staticfeeds:/var/www/html/cap 
+      - staticfeeds:/var/www/html/cap
