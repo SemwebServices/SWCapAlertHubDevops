@@ -8,6 +8,10 @@ volumes:
   capesdata:
   staticfeeds:
 
+networks:
+  fah:
+    driver: overlay
+
 services:
   #
   # docker exec -it pg psql -u postgres
@@ -25,7 +29,7 @@ services:
     ports:
       - 5432:5432
     networks:
-      default:
+      fah:
         aliases:
           - pghost
           - postgres
@@ -63,7 +67,7 @@ services:
     volumes:
       - capesdata:/usr/share/elasticsearch/data
     networks:
-      default:
+      fah:
         aliases:
           - eshost
           - elasticsearch
@@ -94,7 +98,7 @@ services:
       - RABBITMQ_DEFAULT_PASS=admpass 
       - RABBITMQ_NODENAME=cap@rabbitmq
     networks:
-      default:
+      fah:
         aliases:
           - rabbitmq
     logging:
@@ -110,7 +114,9 @@ services:
 
   setup:
     image: semweb/caphub_setup:latest
-    restart: no
+    deploy:
+      restart_policy:
+        condition: no
     depends_on:
       - "rabbitmq"
       - "es7"
@@ -121,7 +127,7 @@ services:
         max-size: "500k"
         max-file: "3"
     networks:
-      default:
+      fah:
         aliases:
           - setup
 
@@ -133,7 +139,7 @@ services:
     ports:
       - 8081:8080
     networks:
-      default:
+      fah:
         aliases:
           - ffhost
 
@@ -148,7 +154,7 @@ services:
     volumes:
       - staticfeeds:/var/www/html/cap 
     networks:
-      default:
+      fah:
         aliases:
           - cchost
 
@@ -162,6 +168,6 @@ services:
     volumes:
       - staticfeeds:/var/www/html/cap
     networks:
-      default:
+      fah:
         aliases:
           - frontend
