@@ -143,7 +143,7 @@ services:
       - "es7"
       - "postgres"
     ports:
-      - 8082:8080 
+      - 8082:8080
     volumes:
       - staticfeeds:/var/www/html/cap 
     networks:
