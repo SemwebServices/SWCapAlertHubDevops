@@ -18,8 +18,9 @@
 #
 # echo Dont forget that docker-compose might not rebuild this container - use docker-compose build if you edit this file
 #
-( sleep 15 ; \
+( sleep 30 ; \
 echo Commence Rabbit setup; \
+echo ---------------------; \
 rabbitmqctl add_user cap cap; \
 rabbitmq-plugins enable rabbitmq_web_stomp; \
 rabbitmq-plugins enable rabbitmq_management; \

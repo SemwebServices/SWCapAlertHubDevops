@@ -41,7 +41,7 @@ services:
     healthcheck:
       timeout: 5s
       interval: 5s
-      retries: 5
+      retries: 20
       test:
         - "CMD-SHELL"
         - "pg_isready --dbname=postgres --host=localhost --username=postgres"
@@ -77,9 +77,9 @@ services:
         max-size: "500k"
         max-file: "3"
     healthcheck:
-      timeout: 5s
-      interval: 5s
-      retries: 5
+      timeout: 15s
+      interval: 15s
+      retries: 20
       test:
         - "CMD-SHELL"
         - "curl http://localhost:9200/_cluster/health | grep '.status.:.\\(green\\|yellow\\)'"
@@ -109,14 +109,14 @@ services:
     healthcheck:
       test: ["CMD", "bash", "-c", "rabbitmqctl list_exchanges | grep CAPExchange"]
       interval: 30s
-      timeout: 10s
-      retries: 10
+      timeout: 20s
+      retries: 20
 
   setup:
     image: semweb/caphub_setup:latest
     deploy:
       restart_policy:
-        condition: no
+        condition: "none"
     depends_on:
       - "rabbitmq"
       - "es7"
