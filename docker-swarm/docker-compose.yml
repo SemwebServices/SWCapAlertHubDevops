@@ -110,6 +110,7 @@ services:
 
   setup:
     image: semweb/caphub_setup:latest
+    restart: no
     depends_on:
       - "rabbitmq"
       - "es7"
