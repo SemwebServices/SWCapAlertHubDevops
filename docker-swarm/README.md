@@ -1,6 +1,9 @@
 # Initialise the node
 docker swarm init
 
+# We need a registry
+docker service create --name registry --publish published=5000,target=5000 registry:2
+
 # For all-in-one
 docker stack deploy -c ./docker-compose.yml fah
 
