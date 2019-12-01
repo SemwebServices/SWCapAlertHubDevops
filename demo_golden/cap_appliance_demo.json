@@ -3,7 +3,7 @@
       "name": "cap-appliance/all-in-one/v1.3",
       "destination_regions":"us-east-1",
       "prod_destination_regions":"eu-west-2,us-east-1",
-      "profile":"semweb",
+      "profile":"inmet",
       "notes":"ami_groups=all makes the image public"
     },
     "builders": [{
@@ -14,7 +14,7 @@
       "profile": "{{user `profile`}}",
       "source_ami_filter": {
         "filters": {
-          "name":"ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
+          "name":"ubuntu/images/hvm-ssd/ubuntu-eoan-19.10-amd64-server-*",
           "root-device-type": "ebs",
           "virtualization-type": "hvm"
         },
@@ -48,7 +48,7 @@
                        "sudo sudo usermod -aG docker ubuntu",
                        "git clone https://github.com/SemwebServices/SWCapAlertHubDevops.git",
                        "echo sudo to self to get the new group membership",
-                       "sudo su - ubuntu -c \"cd SWCapAlertHubDevops/docker-swarm; docker stack deploy -c ./docker-compose.yml fah\"",
+                       "echo sudo su - ubuntu -c \"cd SWCapAlertHubDevops/docker-swarm; docker stack deploy -c ./docker-compose.yml fah\"",
                        "sleep 120",
                        "echo Done"
                       ]
