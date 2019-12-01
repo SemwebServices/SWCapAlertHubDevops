@@ -1,3 +1,6 @@
+# Initialise the node
+docker swarm init
+
 docker stack deploy -c ./docker-compose.yml fah
 docker stack ps fah
 docker stack rm fah
