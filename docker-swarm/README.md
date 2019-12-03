@@ -23,3 +23,8 @@ docker service inspect 6era9p6kh3kq
 # To update a service
 docker service update --image semweb/caphub_aggregator:v2.0.1 fah_capAggregator
 
+To scale a component down to 0 -
+
+docker service scale fah_capAggregator=0
+
+
