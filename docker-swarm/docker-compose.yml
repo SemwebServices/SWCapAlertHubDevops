@@ -131,6 +131,7 @@ services:
         aliases:
           - setup
 
+  # Useful info on wait here: https://dev.to/hugodias/wait-for-mongodb-to-start-on-docker-3h8b
   feedFacade:
     image: semweb/caphub_feedfacade:latest
     depends_on:
@@ -147,6 +148,9 @@ services:
       options:
         max-size: "500k"
         max-file: "3"
+    environment:
+      WAIT_HOSTS: postgres:5432, rabbitmq:5672
+
 
   capAggregator:
     image: semweb/caphub_aggregator:latest
@@ -167,6 +171,8 @@ services:
       options:
         max-size: "500k"
         max-file: "3"
+    environment:
+      WAIT_HOSTS: postgres:5432, rabbitmq:5672, elasticsearch:9200
 
   nginx:
     image: semweb/caphub_nginx:latest

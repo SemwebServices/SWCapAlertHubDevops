@@ -27,4 +27,8 @@ To scale a component down to 0 -
 
 docker service scale fah_capAggregator=0
 
+To inspect the existing service
+
+docker service inspect --pretty fah_capAggregator
+
 
