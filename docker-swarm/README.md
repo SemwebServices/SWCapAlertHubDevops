@@ -32,3 +32,6 @@ To inspect the existing service
 docker service inspect --pretty fah_capAggregator
 
 
+
+docker stack services fah
+

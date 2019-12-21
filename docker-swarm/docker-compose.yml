@@ -187,3 +187,5 @@ services:
       fah:
         aliases:
           - frontend
+    environment:
+      WAIT_HOSTS: cchost:8080, ffhost:8080
