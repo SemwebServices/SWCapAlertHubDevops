@@ -1,5 +1,9 @@
 
+
 Devops scripts for the semweb cap filtered alert hub
+
+
+This work has been kindly supported by UCAR Subaward SUBAWD001770
 
 # For developers
 
