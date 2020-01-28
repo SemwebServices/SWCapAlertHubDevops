@@ -6,6 +6,10 @@ version: "3.7"
 volumes:
   staticfeeds:
 
+networks:
+  fah:
+    driver: overlay
+
 services:
   feedFacade:
     image: semweb/caphub_feedfacade:latest
@@ -15,7 +19,7 @@ services:
     ports:
       - 8081:8080
     networks:
-      default:
+      fah:
         aliases:
           - ffhost
 
@@ -30,6 +34,20 @@ services:
     volumes:
       - staticfeeds:/var/www/html/cap 
     networks:
-      default:
+      fah:
         aliases:
           - cchost
+
+  nginx:
+    image: semweb/caphub_nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - staticfeeds:/var/www/html/cap
+    networks:
+      fah:
+        aliases:
+          - frontend
+   environment:
+      WAIT_HOSTS: cchost:8080, ffhost:8080
+
