@@ -9,4 +9,4 @@ RUN chmod +x /wait
 COPY html/ /var/www/html/
 COPY ./nginx_default.conf /etc/nginx/conf.d/default.conf
 
-CMD /wait && nginx -d daemon off;
+CMD /wait && nginx -g "daemon off";
