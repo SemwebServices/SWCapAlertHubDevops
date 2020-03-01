@@ -1,1 +1,1 @@
-kubectl create configmap postgres --from-file=init.sql
+kubectl create configmap postgres --from-file=init.sql --from-file=pg_hba.conf

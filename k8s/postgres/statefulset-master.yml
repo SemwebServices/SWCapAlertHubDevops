@@ -40,6 +40,9 @@ spec:
               value: postgres
             - name: POSTGRES_DB
               value: postgres
+            # Without PGUSER the liveness and readyness probes report unknown role root
+            - name: PGUSER
+              value: postgres
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
             - name: POSTGRES_PASSWORD
@@ -52,6 +55,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: status.podIP
+
           livenessProbe:
             exec:
               command:
@@ -63,6 +67,7 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 5
+
           readinessProbe:
             exec:
               command:
@@ -74,13 +79,17 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             timeoutSeconds: 3
+
           volumeMounts:
             - mountPath: /var/lib/postgresql/data/pgdata
               name: postgres
               subPath: postgres-db
             - name: postgres-config
-              mountPath: /docker-entrypoint-initdb.d/create-replica-user.sh
-              subPath: create-replica-user.sh
+              mountPath: /etc/pg_hba.conf
+              subPath: pg_hba.conf
+            - name: postgres-config
+              mountPath: /docker-entrypoint-initdb.d/init.sql
+              subPath: init.sql
           
   volumeClaimTemplates:
   - metadata:
