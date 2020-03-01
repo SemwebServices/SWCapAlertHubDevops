@@ -8,6 +8,11 @@ kubectl apply -f ./secret.yml
 kubectl apply -f statefulset-master.yml
 kubectl logs postgres-0
 kubectl apply -f postgres-service.yml
-
 # This command will allow us to connect on the host when using minikube
 # kubectl port-forward postgres-0 5432:5432
+cd ..
+
+
+# Not working yet
+# cd rabbit
+# kubectl apply -f rabbit-statefulset.yml
