@@ -14,5 +14,8 @@ cd ..
 
 
 # Not working yet
-# cd rabbit
-# kubectl apply -f rabbit-statefulset.yml
+cd rabbit
+kubectl apply -f rabbit.yml
+cd ..
+
+cd es
