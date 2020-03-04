@@ -16,6 +16,7 @@ cd ..
 # Not working yet
 cd rabbit
 kubectl apply -f rabbit.yml
-cd ..
 
+cd ..
 cd es
+kubectl apply -f elasticsearch.yml
