@@ -24,3 +24,9 @@ All the scripts are predicated on having a pgsql user with the following kind of
 
 CREATE USER fiaadmin with CREATEDB CREATEUSER password 'your_local_fiaadmin_password_here';
 
+
+truncate -s 0 /var/lib/docker/containers/*/*-json.log
+
+curl -H 'Content-Type: application/json' -X POST "https://www.alert-hub.org/es/alerts/_search" -d '{ "query":{ "bool": { "must": { "match_all": {} }, "filter": { "geo_shape": { "subshape": { "shape": { "type" : "polygon", "coordinates" : [ [ [-176,11],[-61,11],[-61,73],[-176,73],[-176,11] ] ] }, "relation": "within" } } } } } }'
+
+curl -H 'Content-Type: application/json' -X POST "https://www.alert-hub.org/es/alerts/_search" -d '{ "query":{ "bool": { "must": { "match_all": {} }, "filter": { "geo_shape": { "AlertBody.info.area.cc_polys": { "shape": { "type" : "polygon", "coordinates" : [ [ [-176,11],[-61,11],[-61,73],[-176,73],[-176,11] ] ] }, "relation": "within" } } } } } }'
