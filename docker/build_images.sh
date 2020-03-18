@@ -23,3 +23,9 @@ docker push semweb/caphub_nginx:v1.0.11
 docker push semweb/caphub_nginx:v1.0
 docker push semweb/caphub_nginx:v1
 docker push semweb/caphub_nginx:latest
+
+
+# After building one or more images, the running component can be upgraded live with (for example)
+# docker service update --image image:version label
+# docker service update --image semweb/caphub_aggregator:v2.0.9 fah_capAggregator
+# docker service update --image semweb/caphub_nginx:v1.0.10 fah_nginx
