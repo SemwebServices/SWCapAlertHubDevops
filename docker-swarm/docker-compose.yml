@@ -187,6 +187,5 @@ services:
       fah:
         aliases:
           - frontend
-    # happy to have nginx start without the servers be present - assume it self heals
-    # environment:
-    #   WAIT_HOSTS: cchost:8080, ffhost:8080
+    environment:
+      WAIT_HOSTS: cchost:8080, ffhost:8080
