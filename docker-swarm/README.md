@@ -44,4 +44,7 @@ Access the postgres shell through docker - for example
 
     docker exec -it e9563cf988cc psql -U postgres capcollatorprod
 
+# Update images in the docker registry 
+
+    docker pull semweb/caphub_aggregator:latest
 
