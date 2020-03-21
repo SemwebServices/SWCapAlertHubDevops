@@ -35,3 +35,8 @@ docker service inspect --pretty fah_capAggregator
 
 docker stack services fah
 
+Access the postgres shell through docker - for example
+
+docker exec -it e9563cf988cc psql -U postgres capcollatorprod
+
+
