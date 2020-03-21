@@ -12,8 +12,8 @@ docker push semweb/caphub_rabbit:v1
 docker push semweb/caphub_rabbit:latest
 cd ../setup
 echo Buildig Setup `pwd`
-docker build -t semweb/caphub_setup:v1.0.1 -t semweb/caphub_setup:v1 -t semweb/caphub_setup:latest .
-docker push semweb/caphub_setup:v1.0.1
+docker build -t semweb/caphub_setup:v1.0.2 -t semweb/caphub_setup:v1 -t semweb/caphub_setup:latest .
+docker push semweb/caphub_setup:v1.0.2
 docker push semweb/caphub_setup:v1.0
 docker push semweb/caphub_setup:v1
 docker push semweb/caphub_setup:latest
