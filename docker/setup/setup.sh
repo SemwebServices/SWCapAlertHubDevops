@@ -1,26 +1,30 @@
-#!/bin/sh
+#!/bin/bash
 
 echo This is the CAP Setup Script
-
-echo sleep 30 - Just because the ES container has started, does not mean ES is up and running yet
-sleep 30
-echo Done sleeping.. continue
 
 echo run curl
 curl -I http://elasticsearch:9200/alerts
 
-echo Get HTTP resonse code for accessing alerts index
-export status=`curl -I http://elasticsearch:9200/alerts 2>/dev/null | head -n 1 | cut -d$' ' -f2`
+echo Checking for presence of alerts index
+status=`curl -I http://elasticsearch:9200/alerts 2>/dev/null | head -n 1 | cut -d$' ' -f2`
 
-echo status : -$status-
+echo status : \"$status\"
+n=0
+while (( n < 60  )) && [ -z "$status" ]
+do
+    echo ES not yet responding.. loop n=$n
+    status=`curl -I http://elasticsearch:9200/alerts 2>/dev/null | head -n 1 | cut -d$' ' -f2`
+    n=$((n+1))
+    sleep 10
+done
 
-if [ "$status" -eq '404' ]; then 
+if [ "$status" = '404' ]; then 
   echo Alerts index not present
   sh ./config_es7.sh
   echo Config_es script completed - check for presence of alerts
   curl -I http://elasticsearch:9200/alerts
 else
-  echo "Alerts index detected"
+  echo "Alerts index detected (Status=$status)"
 fi;
 
 echo All done - exit
