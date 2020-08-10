@@ -48,3 +48,10 @@ Access the postgres shell through docker - for example
 
     docker pull semweb/caphub_aggregator:latest
 
+
+
+# Backup Postgres in swarm:
+https://www.postgresql.org/docs/9.1/app-pg-dumpall.html
+docker exec 10f7264ac38a /usr/bin/pg_dumpall -U postgres > d1
+
+
