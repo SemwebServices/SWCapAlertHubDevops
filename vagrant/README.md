@@ -29,5 +29,5 @@ If you should edit the Dockerfiles for rabbit etc, force a rebuild on the docker
 docker-compose -f ./docker-compose-dev-setup.yml up --force-recreate --build
 
 
-docker exec -it cappg psql -U postgres capcollatorprod
+docker exec -it cap_pg psql -U postgres capcollatorprod
 
