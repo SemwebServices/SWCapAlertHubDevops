@@ -12,7 +12,7 @@ services:
   #
   cap_postgres:
     container_name: cap_pg
-    image: postgres:11
+    image: postgres:12
     restart: 'no'
     environment:
       POSTGRES_USER: postgres
