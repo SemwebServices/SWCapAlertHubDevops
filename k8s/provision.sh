@@ -43,4 +43,16 @@ echo Declare bindings
 
 cd ..
 cd es
-kubectl apply -f elasticsearch.yml
+
+echo It is necessary to tune kernel parameters for ES:
+sysctl -w vm.max_map_count=262144 
+sysctl -w fs.file-max=65536
+
+helm install semweb-default-es \
+  --set global.kibanaEnabled=true,sysctlImage.enabled=false \
+  --render-subchart-notes \
+  -n core --create-namespace \
+  bitnami/elasticsearch
+
+echo remove with helm delete semweb-default-es
+
