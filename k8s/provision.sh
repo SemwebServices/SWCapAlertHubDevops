@@ -54,5 +54,27 @@ helm install semweb-default-es \
   -n core --create-namespace \
   bitnami/elasticsearch
 
+# see https://medium.com/faun/securing-k8s-application-using-ingress-rule-nginx-ingress-controller-a819b0e11281
+# kubectl apply -f ./bitnami-es-ingress.yaml 
+cat <<EOF | kubectl apply -f -
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sw-core-es-service
+  namespace: core
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: es.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          serviceName: semweb-default-es-coordinating-only
+          servicePort: 9200
+EOF
+
 echo remove with helm delete semweb-default-es
 
