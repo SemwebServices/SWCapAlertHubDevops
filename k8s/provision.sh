@@ -19,7 +19,7 @@ See also https://docs.bitnami.com/ibm/infrastructure/rabbitmq/administration/use
 This setup will create an ingress rule for hostname rabbitmq.local - arrange for that in your hosts file or other dns setup
 
 helm install semweb-default-rabbit \
-  --set ingress.enabled=true \
+  --set ingress.enabled=true, auth.password=wibble1234 \
   bitnami/rabbitmq -n core --create-namespace
 
 visit http://rabbitmq.local and provision an administrative user - cap/PASSWORD
