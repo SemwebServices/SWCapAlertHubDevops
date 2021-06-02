@@ -5,6 +5,7 @@ version: "2.1"
 volumes:
   cappgdata:
   capesdata:
+  staticfeeds:
 
 services:
   #
@@ -150,7 +151,6 @@ services:
         max-file: "3"
     environment:
       WAIT_HOSTS: postgres:5432, rabbitmq:5672
-
 
   capAggregator:
     image: semweb/caphub_aggregator:latest
