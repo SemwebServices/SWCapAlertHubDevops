@@ -132,7 +132,8 @@ services:
         max-size: "500k"
         max-file: "3"
 
-  # Useful info on wait here: https://dev.to/hugodias/wait-for-mongodb-to-start-on-docker-3h8b
+  # Access http://localhost:8081/feedFacade
+  # On first use visit http://localhost:8081/feedFacade/setup
   feedFacade:
     image: semweb/caphub_feedfacade:latest
     depends_on:
@@ -140,10 +141,6 @@ services:
       - "postgres"
     ports:
       - 8081:8080
-    networks:
-      fah:
-        aliases:
-          - ffhost
     logging:
       driver: "json-file"
       options:
@@ -152,6 +149,8 @@ services:
     environment:
       WAIT_HOSTS: postgres:5432, rabbitmq:5672
 
+  # Access http://localhost:8082/CAPAggregator
+  # On first use visit http://localhost:8082/CAPAggregator/setup
   capAggregator:
     image: semweb/caphub_aggregator:latest
     depends_on:
@@ -162,10 +161,6 @@ services:
       - 8082:8080
     volumes:
       - staticfeeds:/var/www/html/cap
-    networks:
-      fah:
-        aliases:
-          - cchost
     logging:
       driver: "json-file"
       options:
