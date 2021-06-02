@@ -1,0 +1,177 @@
+# -*- coding: utf-8 -*-
+
+version: "2.1"
+
+volumes:
+  cappgdata:
+  capesdata:
+
+services:
+  #
+  # docker exec -it pg psql -u postgres
+  #
+  postgres:
+    container_name: cappg
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pa55w0rd
+      POSTGRES_DB: postgres
+    volumes:
+      - cappgdata:/var/lib/postgresql/data
+      - ./pginit:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+    networks:
+      default:
+        aliases:
+          - pghost
+          - postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD-SHELL"
+        - "pg_isready --dbname=postgres --host=localhost --username=postgres"
+
+
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
+  # https://github.com/k-int/KBPlusG3/blob/dev-integration/SETUP-ES-DOCKER.txt
+  # see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
+  es7:
+    container_name: es7
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    restart: always
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx2g -Dfile.encoding=UTF-8"
+      - discovery.type=single-node 
+      - cluster.name=elasticsearch
+      - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+      - LC_ALL=en_US.UTF-8
+      - LANG=en_US.UTF-8
+      - LANGUAGE=en_US.UTF-8
+    ports:
+      - 9200:9200 
+      - 9300:9300
+    volumes:
+      - capesdata:/usr/share/elasticsearch/data
+    networks:
+      default:
+        aliases:
+          - eshost
+          - elasticsearch
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD-SHELL"
+        - "curl http://localhost:9200/_cluster/health | grep '.status.:.\\(green\\|yellow\\)'"
+
+
+  # Converted from 
+  # docker run -d --restart always --hostname rabbitmq -p 15672:15672 -p 5672:5672 --name rabbitmq -e RABBITMQ_DEFAULT_USER=adm -e RABBITMQ_DEFAULT_PASS=admpass rabbitmq:management
+  # See also
+  # http://mpas.github.io/post/2015/06/11/20150611_docker-rabbitmq-default-users/
+  # also https://stackoverflow.com/questions/39816899/docker-official-tomcat-image-modify-server-xml-and-add-jar-to-lib-folder
+  # also COPY server.xml /usr/local/tomcat/conf/
+  # Test currently running with version 3.7.15
+  rabbitmq:
+    container_name: rabbitmq
+    build: rabbitmq
+    hostname: rabbitmq
+    # image: rabbitmq:management
+    restart: always
+    ports:
+      - 15672:15672 
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=adm
+      - RABBITMQ_DEFAULT_PASS=admpass 
+      - RABBITMQ_NODENAME=cap@rabbitmq
+    networks:
+      default:
+        aliases:
+          - rabbitmq
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "rabbitmqctl list_exchanges | grep CAPExchange"]
+      interval: 30s,
+      timeout: 10s
+      retries: 10
+
+  setup:
+    build: setup
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      es7:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+
+  # Useful info on wait here: https://dev.to/hugodias/wait-for-mongodb-to-start-on-docker-3h8b
+  feedFacade:
+    image: semweb/caphub_feedfacade:latest
+    depends_on:
+      - "rabbitmq"
+      - "postgres"
+    ports:
+      - 8081:8080
+    networks:
+      fah:
+        aliases:
+          - ffhost
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+    environment:
+      WAIT_HOSTS: postgres:5432, rabbitmq:5672
+
+
+  capAggregator:
+    image: semweb/caphub_aggregator:latest
+    depends_on:
+      - "rabbitmq"
+      - "es7"
+      - "postgres"
+    ports:
+      - 8082:8080
+    volumes:
+      - staticfeeds:/var/www/html/cap
+    networks:
+      fah:
+        aliases:
+          - cchost
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "3"
+    environment:
+      WAIT_HOSTS: postgres:5432, rabbitmq:5672, elasticsearch:9200
+
+
