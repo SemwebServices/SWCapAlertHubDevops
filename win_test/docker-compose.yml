@@ -113,7 +113,7 @@ services:
         max-file: "3"
     healthcheck:
       test: ["CMD", "bash", "-c", "rabbitmqctl list_exchanges | grep CAPExchange"]
-      interval: 30s,
+      interval: 30s
       timeout: 10s
       retries: 10
 
@@ -148,6 +148,7 @@ services:
         max-file: "3"
     environment:
       WAIT_HOSTS: postgres:5432, rabbitmq:5672
+      LOGGING_LEVEL_FEEDFACADE: WARN
 
   # Access http://localhost:8082/CAPAggregator
   # On first use visit http://localhost:8082/CAPAggregator/setup
@@ -167,6 +168,7 @@ services:
         max-size: "500k"
         max-file: "3"
     environment:
-      WAIT_HOSTS: postgres:5432, rabbitmq:5672, elasticsearch:9200
+      WAIT_HOSTS: postgres:5432, rabbitmq:5672, es7:9200
+      LOGGING_LEVEL_CAPCOLLATOR: WARN
 
 
