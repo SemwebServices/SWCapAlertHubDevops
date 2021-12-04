@@ -22,6 +22,8 @@
 echo Commence Rabbit setup; \
 echo ---------------------; \
 rabbitmqctl add_user cap cap; \
+rabbitmq-plugins enable rabbitmq_stomp; \
+rabbitmq-plugins enable rabbitmq_mqtt; \
 rabbitmq-plugins enable rabbitmq_web_stomp; \
 rabbitmq-plugins enable rabbitmq_management; \
 rabbitmqctl set_user_tags cap administrator ; \
@@ -29,6 +31,9 @@ sleep 2; \
 echo Perform setup; \
 rabbitmqctl set_permissions cap "stomp-subscription-.*" "stomp-subscription-.*" "(FeedFetcher|CAPExchange|stomp-subscription-.*)" ; \
 rabbitmqctl set_permissions cap ".*" ".*" ".*" ; \
+rabbitmqctl add_user mqtt-test mqtt-test; \
+rabbitmqctl set_permissions -p / mqtt-test ".*" ".*" ".*"; \
+rabbitmqctl set_user_tags mqtt-test management; \
 echo Declare exchanges; \
 rabbitmqadmin --username cap --password cap declare exchange name=FeedFetcher type=topic ; \
 rabbitmqadmin --username cap --password cap declare exchange name=CAPExchange type=topic ; \
