@@ -1,0 +1,112 @@
+# -*- coding: utf-8 -*-
+
+version: "2.2"
+
+volumes:
+  cap_pgdata:
+  cap_esdata:
+
+services:
+  #
+  # docker exec -it pg psql -u postgres
+  #
+  cap_postgres:
+    container_name: cap_pg
+    image: postgres:12
+    restart: 'no'
+    command: postgres -c 'max_connections=200'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pa55w0rd
+      POSTGRES_DB: postgres
+    volumes:
+      - cap_pgdata:/var/lib/postgresql/data
+      - ./pginit:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+    networks:
+      default:
+        aliases:
+          - pghost
+          - postgres
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD-SHELL"
+        - "pg_isready --dbname=postgres --host=localhost --username=postgres"
+
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
+  # https://github.com/k-int/KBPlusG3/blob/dev-integration/SETUP-ES-DOCKER.txt
+  # see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html
+  cap_es7:
+    container_name: cap_es7
+    # image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0 - latest is 7.8.1
+    # image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    restart: 'no'
+    environment:
+      - cluster.name=elasticsearch
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ports:
+      - 9200:9200 
+      - 9300:9300
+    volumes:
+      - cap_esdata:/usr/share/elasticsearch/data
+    networks:
+      default:
+        aliases:
+          - eshost
+          - elasticsearch
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD-SHELL"
+        - "curl http://localhost:9200/_cluster/health | grep '.status.:.\\(green\\|yellow\\)'"
+
+  # Converted from 
+  # docker run -d --restart always --hostname rabbitmq -p 15672:15672 -p 5672:5672 --name rabbitmq -e RABBITMQ_DEFAULT_USER=adm -e RABBITMQ_DEFAULT_PASS=admpass rabbitmq:management
+  # See also
+  # http://mpas.github.io/post/2015/06/11/20150611_docker-rabbitmq-default-users/
+  cap_rabbitmq:
+    container_name: cap_rabbitmq
+    build: rabbitmq
+    hostname: rabbitmq
+    restart: 'no'
+    ports:
+      - 15672:15672 
+      - 5672:5672
+      - 15674:15674
+    environment:
+      - RABBITMQ_DEFAULT_USER=adm
+      - RABBITMQ_DEFAULT_PASS=admpass 
+      - RABBITMQ_NODENAME=cap@rabbitmq
+    networks:
+      default:
+        aliases:
+          - rabbitmq
+    healthcheck:
+      test: ["CMD", "bash", "-c", "rabbitmqctl list_exchanges | grep CAPExchange"]
+      interval: 30s,
+      timeout: 10s
+      retries: 10
+
+  setup:
+    build: setup
+    depends_on:
+      cap_rabbitmq:
+        condition: service_healthy
+      cap_es7:
+        condition: service_healthy
+      cap_postgres:
+        condition: service_healthy
+
+  feedFacade:
+    container_name: ff
+    image: docker.semweb.co/semweb/caphub_feedfacade:SNAPSHOT-3
+    ports: 
+      - 8080:8080
