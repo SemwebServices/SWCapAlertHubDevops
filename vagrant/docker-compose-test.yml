@@ -107,6 +107,6 @@ services:
 
   feedFacade:
     container_name: ff
-    image: docker.semweb.co/semweb/caphub_feedfacade:SNAPSHOT-3
+    image: semweb/caphub_feedfacade:v3.0.1-SNAPSHOT
     ports: 
       - 8080:8080
