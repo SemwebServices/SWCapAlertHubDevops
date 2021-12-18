@@ -19,8 +19,8 @@ docker push semweb/caphub_setup:v1
 docker push semweb/caphub_setup:latest
 cd ../nginx
 echo Buildig Nginx `pwd`
-docker build -t semweb/caphub_nginx:v1.0.22 -t semweb/caphub_nginx:v1.0 -t semweb/caphub_nginx:v1 -t semweb/caphub_nginx:latest .
-docker push semweb/caphub_nginx:v1.0.22
+docker build -t semweb/caphub_nginx:v1.0.23 -t semweb/caphub_nginx:v1.0 -t semweb/caphub_nginx:v1 -t semweb/caphub_nginx:latest .
+docker push semweb/caphub_nginx:v1.0.23
 docker push semweb/caphub_nginx:v1.0
 docker push semweb/caphub_nginx:v1
 docker push semweb/caphub_nginx:latest
