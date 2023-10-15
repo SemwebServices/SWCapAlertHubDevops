@@ -1,4 +1,4 @@
-FROM rabbitmq:management
+FROM rabbitmq:3.10.25-management
 
 # Taken from http://mpas.github.io/post/2015/06/11/20150611_docker-rabbitmq-default-users/
 
