@@ -12,7 +12,7 @@ services:
   #
   cap_postgres:
     container_name: cap_pg
-    image: postgres:12
+    image: postgres:13
     restart: 'no'
     command: postgres -c 'max_connections=200'
     environment:
