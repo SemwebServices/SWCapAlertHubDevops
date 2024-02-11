@@ -30,8 +30,8 @@ services:
           - pghost
           - postgres
     healthcheck:
-      timeout: 5s
-      interval: 5s
+      timeout: "5s"
+      interval: "5s"
       retries: 5
       test:
         - "CMD-SHELL"
@@ -61,8 +61,8 @@ services:
           - eshost
           - elasticsearch
     healthcheck:
-      timeout: 5s
-      interval: 5s
+      timeout: "5s"
+      interval: "5s"
       retries: 5
       test:
         - "CMD-SHELL"
@@ -91,8 +91,8 @@ services:
           - rabbitmq
     healthcheck:
       test: ["CMD", "bash", "-c", "rabbitmqctl list_exchanges | grep CAPExchange"]
-      interval: 30s,
-      timeout: 10s
+      interval: "30s"
+      timeout: "10s"
       retries: 10
 
   setup:
